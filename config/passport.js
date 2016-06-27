@@ -20,6 +20,7 @@ passport.use('local-signup', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: 'true' // yes, we do want to have access to the req obj
 }, function(req, email, password, done){
+  console.log("inside of local signup");
 // check to see if the email is taken
   User.findOne({'local.email': email}, function(err, user){
     if (err) return done(err)

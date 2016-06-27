@@ -11,6 +11,7 @@ var
 	session = require('express-session'), //creates the cookies that passport uses
 	passport = require('passport'),
 	userRoutes = require('./routes/users.js'),
+	eventRoutes = require('./routes/events.js'),
 	passportConfig = require('./config/passport.js'),
 	request = require('request'),
 	dotenv = require('dotenv').load({silent: true}),
@@ -29,17 +30,21 @@ io.on('connection', function(socket){
 	socket.on('disconnect', function(){
     console.log('user disconnected');
   });
-	socket.on('send chat', function(msg){
-		console.log('message received');
-		})
+
+  socket.on('send chat', function(msg){
+		// if (err) return console.log(err)
+		io.emit('r chat', msg)
+		console.log(msg);
+})
 });
+
 
 // application-wide middleware:
 app.use(logger('dev'))
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
-
+app.use(express.static('public'))
 
 // environment port
 var port = process.env.PORT || 3000
@@ -58,7 +63,7 @@ app.use(session({
 
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(flash())
+app.use(flash() )
 
 //root route
 app.get('/', function(req,res){
@@ -66,7 +71,8 @@ app.get('/', function(req,res){
 })
 
 app.use('/', userRoutes)
+// app.use('/events/', eventRoutes)
 
-app.listen(port, function(){
+http.listen(port, function(){
 	console.log("Server running on port", port)
 })

@@ -1,20 +1,16 @@
 var
   express = require('express'),
+  passport = require('passport'),
   eventRouter = express.Router(),
-  Event = require('../models/Event.js')
+  Post = require('../models/Event.js'),
+  eventCtrl = require('../controllers/events.js')
+
+
 
 eventRouter.route('/events')
-  .get(function(req, res) {
-    Event.find({}, function(err, events) {
-      if (err) throw err;
-      res.json(events)
-    })
-  })
+  .get(eventCtrl.index)
 
-  eventRouter.route('/events/:id')
-  .get(function(req, res) {
-    Event.findById(req.params.id, function(err, event) {
-      if (err) throw err;
-      res.json(event)
-    })
-  })
+eventRouter.route('event/:id')
+  .get(eventCtrl.show)
+
+module.exports = eventRouter

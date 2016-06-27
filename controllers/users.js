@@ -2,22 +2,21 @@ var
   User = require('../models/User.js'),
   express = require('express'),
   passport = require('passport'),
-  userRouter = express.Router()
+  passportConfig = require('../config/passport.js')
+  //,userRouter = express.Router()
 
 //This will need to be edted
 module.exports = {
-
   index: index,
-
   login: login,
-  authenticate: authenticate,
+  // authenticate: authenticate,
 
   signup: signup,
-  createAccount: createAccount,
-
+  // createAccount: createAccount
+  //
   show: show,
-  // user/:id/patch
-  // user/:id/delete
+  // // user/:id/patch
+  // // user/:id/delete
 
   editForm: editForm,
 
@@ -36,12 +35,12 @@ function login(req, res) {
   res.render('login', {flash: req.flash('loginMessage')})
   }
 
-function authenticate() {
-  passport.authenticate('local-login', {
-    successRedirect: '/user',
-    failureRedirect: '/login'
-  })
-}
+// function authenticate() {
+//   passport.authenticate('local-login', {
+//     successRedirect: '/user',
+//     failureRedirect: '/login'
+//   })
+// }
 
 
 // Signup Routes
@@ -49,12 +48,13 @@ function signup (req, res){
     res.render('signup', {flash: req.flash('signupMessage')} )
   }
 
-function createAccount(req, res) {
-  passport.authenticate('local-signup',{
-    successRedirect: '/profile',
-    failureRedirect: '/signup'
-  })
-}
+// function createAccount(req, res) {
+//   console.log("inside of create account");
+//   passport.authenticate('local-signup',{
+//     successRedirect: '/',
+//     failureRedirect: '/signup'
+//   })
+// }
 
 
 // user/:id Routes
@@ -84,7 +84,7 @@ function logout () {
 
 
 // Middleware for monitoring loginMessage
-function isLoggedIn(req, res, next) {
-  if(req.isAuthenticated()) return next()
-  res.redirect('/')
-}
+// function isLoggedIn(req, res, next) {
+//   if(req.isAuthenticated()) return next()
+//   res.redirect('/')
+// }
