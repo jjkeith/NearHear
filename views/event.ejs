@@ -2,9 +2,9 @@
 <html>
   <head>
     <title>Socket.IO chat</title>
-    <script type="text/javascript" src="../public/js/socket.io-1.4.5.js"></script>
-    <script type="text/javascript" src="../public/js/jquery-3.0.0.min.js"></script>
-    <script type="text/javascript" src="../public/js/moment.js"></script>
+    <script type="text/javascript" src="/js/socket.io-1.4.5.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript" src="/js/moment.js"></script>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -24,12 +24,14 @@
     <script src="/socket.io/socket.io.js"></script>
       <script>
         var socket = io();
+        
         $('form').submit(function(){
           socket.emit('send chat', $('#m').val());
           $('#m').val('');
           console.log('message sending');
           return false
         })
+
       </script>
   </body>
 </html>
