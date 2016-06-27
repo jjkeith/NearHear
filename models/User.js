@@ -5,6 +5,7 @@ var
   userSchema = new Schema({
     local: {
       name: String,
+      zipcode: Number,
       email: String,
       password: String
     }

@@ -13,12 +13,25 @@ var
 	userRoutes = require('./routes/users.js'),
 	passportConfig = require('./config/passport.js'),
 	request = require('request'),
-	dotenv = require('dotenv').load({silent: true})
+	dotenv = require('dotenv').load({silent: true}),
+	http = require('http').Server(app),
+	io = require('socket.io')(http)
 
 	mongoose.connect(process.env.DB_URL, function(err){
 		if (err) throw err;
 		console.log('connected to mongodb (passport-authentication)');
 	})
+
+// io socket connection listener
+io.on('connection', function(socket){
+  console.log('a user connected');
+	socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+	socket.on('send chat', function(msg){
+		console.log('message received');
+		})
+});
 
 // application-wide middleware:
 app.use(logger('dev'))
