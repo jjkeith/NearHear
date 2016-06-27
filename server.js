@@ -11,9 +11,11 @@ var
 	session = require('express-session'), //creates the cookies that passport uses
 	passport = require('passport'),
 	userRoutes = require('./routes/users.js'),
-	passportConfig = require('./config/passport.js')
+	passportConfig = require('./config/passport.js'),
+	request = require('request'),
+	dotenv = require('dotenv').load({silent: true})
 
-	mongoose.connect('mongodb://localhost/passport-authentication', function(err){
+	mongoose.connect(process.env.DB_URL, function(err){
 		if (err) throw err;
 		console.log('connected to mongodb (passport-authentication)');
 	})
