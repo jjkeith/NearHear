@@ -24,12 +24,18 @@
     <script src="/socket.io/socket.io.js"></script>
       <script>
         var socket = io();
-        
+
         $('form').submit(function(){
           socket.emit('send chat', $('#m').val());
           $('#m').val('');
           console.log('message sending');
           return false
+        })
+
+        socket.on('r chat', function(msg){
+          console.log(msg);
+          var timestamp = moment(msg.timestamp).format('h:mm:a')
+          $('#messages').append('<li><small>' + timestamp + '</small> ' + msg + '</li>')
         })
 
       </script>
