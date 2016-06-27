@@ -55,7 +55,7 @@ app.use(session({
 
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(flash())
+app.use(flash() )
 
 //root route
 app.get('/', function(req,res){
@@ -63,7 +63,7 @@ app.get('/', function(req,res){
 })
 
 app.use('/', userRoutes)
-app.use('/', eventRoutes)
+// app.use('/events/', eventRoutes)
 
 http.listen(port, function(){
 	console.log("Server running on port", port)

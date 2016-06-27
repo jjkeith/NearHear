@@ -8,10 +8,9 @@ var
 
 
 eventRouter.route('/events')
-  .get(eventRouter.index)
+  .get(eventCtrl.index)
 
 eventRouter.route('event/:id')
-  .get(eventRouter.show)
-
+  .get(eventCtrl.show)
 
 module.exports = eventRouter
