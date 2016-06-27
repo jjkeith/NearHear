@@ -6,62 +6,85 @@ var
 
 //This will need to be edted
 module.exports = {
+
   index: index,
+
   login: login,
-  signup: signup
-  // authenticate: authenticate
+  authenticate: authenticate,
+
+  signup: signup,
+  createAccount: createAccount,
+
+  show: show,
+  // user/:id/patch
+  // user/:id/delete
+
+  editForm: editForm,
+
+  logout: logout
 }
 
 
-function index(req, res){
+// Root Routes
+function index(req, res) {
   res.render('login', {flash: req.flash('loginMessage')})
 }
 
-function signup(req, res){
-  res.render('signup', {flash: req.flash('signupMessage')})}
 
-
-// function authenticate() {
-//   passport.authenticate('local-login', {
-//   successRedirect: '/profile',
-//   failureRedirect: '/login'
-// })}
-
-function login(req, res){
+// Login Routes
+function login(req, res) {
   res.render('login', {flash: req.flash('loginMessage')})
   }
 
-// // function authenticate (passport.authenticate('local-login', {
-//     successRedirect: '/profile',
-//     failureRedirect: '/login'
-//   }))
+function authenticate() {
+  passport.authenticate('local-login', {
+    successRedirect: '/user',
+    failureRedirect: '/login'
+  })
+}
 
-// userRouter.route('/signup')
-//   .get(function(req, res){
-//     res.render('signup', {flash: req.flash('signupMessage')})
-//   })
-//   .post(passport.authenticate('local-signup',{
-//     successRedirect: '/profile',
-//     failureRedirect: '/signup'
-//   }))
 
-// When somebody tries to go to the profile page, use isLoggedIn to check.
-// The function has to be run before the route is processed.
-// userRouter.get('/profile', isLoggedIn, function(req, res){
-    //render the user's profile view (only if they're logged in...)
-    // res.render('profile', {user: req.user})
-// })
+// Signup Routes
+function signup (req, res){
+    res.render('signup', {flash: req.flash('signupMessage')} )
+  }
 
-// userRouter.get('logout', function(req, res){
-  //destroy the session and redirect the user back to the root.
-  // req.logout()
-//   res.redirect('/')
-// })
+function createAccount(req, res) {
+  passport.authenticate('local-signup',{
+    successRedirect: '/profile',
+    failureRedirect: '/signup'
+  })
+}
 
-// If it returns false, it throws back to the index.
-// function isLoggedIn(req, res, next) {
-//   if(req.isAuthenticated()) return next()
-//   res.redirect('/')
-// }
 
-module.exports = userRouter
+// user/:id Routes
+function show () {
+  isLoggedIn(req, res);
+  res.render( 'profile', {user: req.user} );
+}
+
+function edit() {}
+//need to look at passport documentation to figure out if there's special syntax needed for this.
+
+function destroy() {}
+//need to look at passport documentation to figure out if there's special syntax needed for this.
+
+
+// user/:id/edit Route
+function editForm () {
+  res.render('login');
+}
+
+
+// Logout Routes
+function logout () {
+  req.logout();
+  res.redirect('/');
+}
+
+
+// Middleware for monitoring loginMessage
+function isLoggedIn(req, res, next) {
+  if(req.isAuthenticated()) return next()
+  res.redirect('/')
+}
