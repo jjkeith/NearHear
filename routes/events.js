@@ -18,3 +18,5 @@ eventRouter.route('/events')
       res.json(event)
     })
   })
+
+module.exports = eventRouter
