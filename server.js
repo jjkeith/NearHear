@@ -29,7 +29,14 @@ io.on('connection', function(socket){
 	socket.on('disconnect', function(){
     console.log('user disconnected');
   });
+
+  socket.on('send chat', function(msg){
+		// if (err) return console.log(err)
+		io.emit('r chat', msg)
+		console.log(msg);
+})
 });
+
 
 // application-wide middleware:
 app.use(logger('dev'))
