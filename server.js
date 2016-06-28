@@ -8,15 +8,20 @@ var
 	logger = require('morgan'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
-	session = require('express-session'), //creates the cookies that passport uses
+	methodOverride = require('method-override'),
+	session = require('express-session'),
+
 	passport = require('passport'),
-	userRoutes = require('./routes/users.js'),
-	eventRoutes = require('./routes/events.js'),
 	passportConfig = require('./config/passport.js'),
+
+	userRoutes = require('./routes/users.js'),
+	// eventRoutes = require('./routes/events.js'),
+
 	request = require('request'),
 	dotenv = require('dotenv').load({silent: true}),
 	http = require('http').Server(app),
 	io = require('socket.io')(http),
+
 	NodeGeocoder = require('node-geocoder');
 
 	mongoose.connect(process.env.DB_URL, function(err){
@@ -31,10 +36,10 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
 
-  socket.on('send chat', function(msg){
-		// if (err) return console.log(err)
-		io.emit('r chat', msg)
-		console.log(msg);
+socket.on('send chat', function(msg){
+	// if (err) return console.log(err)
+	io.emit('r chat', msg)
+	console.log(msg);
 })
 });
 
@@ -43,8 +48,21 @@ io.on('connection', function(socket){
 app.use(logger('dev'))
 app.use(cookieParser())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded())
+app.use(methodOverride(function(req, res){
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
 app.use(express.static('public'))
+
+app.use(function(req,res,next){
+  res.locals.login = req.isAuthenticated()
+  next()
+})
 
 // environment port
 var port = process.env.PORT || 3000
@@ -61,9 +79,10 @@ app.use(session({
 	saveUninitialized: false //because passport will do it for us.
 }))
 
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(flash() )
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash() );
+// app.use(favicon(__dirname + '/public/favicon.ico'));
 
 // root route
 app.get('/', function(req,res){
@@ -71,8 +90,8 @@ app.get('/', function(req,res){
 })
 
 app.use('/', userRoutes)
-app.use('/events', eventRoutes)
+// app.use('/events', eventRoutes)
 
 http.listen(port, function(){
-	console.log("Server running on port", port)
+	console.log("Server running on port 3000")
 })

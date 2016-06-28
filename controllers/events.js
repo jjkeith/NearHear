@@ -1,11 +1,15 @@
+// variables for Routing
 var
   User = require('../models/Event.js'),
   express = require('express'),
   passport = require('passport'),
   eventRouter = express.Router()
 
-module.exports = {
+// Variables for the apiKey
+var bodyParser = require('body-parser')
 
+
+module.exports = {
   index: index,
   show: show
 }
@@ -17,10 +21,21 @@ function index (req, res) {
   })
 }
 
-
 function show (req, res) {
   Event.findById(req.params.id, function(err, event) {
     if (err) throw err;
     res.json(event)
   })
+}
+
+module.exports = {
+  search: function(req, res){
+    events.search(req.body.query)
+    .then(function(result){
+      res.json(result)
+    })
+    .catch(function(err){
+      res.json({error: err})
+    })
+  }
 }

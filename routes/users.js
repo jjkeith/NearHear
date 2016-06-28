@@ -1,28 +1,28 @@
 var
    express = require('express'),
    passport = require('passport'),
-   userRouter = express.Router()
+   userRouter = express.Router(),
    User = require('../models/User.js'),
-   dotenv = require('dotenv').load({silent: true})
-   // userCtrl = require('../controllers/users.js')
-
- var map_browser_key = process.env.MAP_BROWSER_KEY;
+   dotenv = require('dotenv').load({silent: true}),
+   userCtrl = require('../controllers/users.js'),
+   map_browser_key = process.env.MAP_BROWSER_KEY
 
 userRouter.route('/login')
   .get(function(req, res){
     res.render('login', {flash: req.flash('loginMessage')})
-})
+  })
+  // .post(userCtrl.authenticate())
   .post(passport.authenticate('local-login', {
-    successRedirect: '/user',
-    failureRedirect: '/',
-    failureFlash: true }
-))
+     successRedirect: '/profile',
+     failureRedirect: '/',
+     failureFlash: true
+  }))
 
-userRouter.route('/user/:id/edit')
+userRouter.route('/users/:id/edit')
   .get(function(req, res) {
-    User.findOne({id: req.params.id}).exec(function(err, user){
+    User.findById(req.params.id, function(err, user) {
     if (err) throw err;
-    res.render('edit', {user: user})
+    res.render('edit', {user: user} )
     })
   })
 
@@ -30,49 +30,50 @@ userRouter.route('/signup')
   .get(function(req, res){
     res.render('signup', {flash: req.flash('signupMessage')} )
   })
-  .post(passport.authenticate('local-signup',{
-    successRedirect: '/user',
+  .post(passport.authenticate('local-signup', {
+    successRedirect: '/profile',
     failureRedirect: '/signup'
   }))
 
-// userRouter.route('/user/:id')
-//   .get(function(req, res) {
-//     User.findOne({_id: req.params.id}.exec(function(err, user) {
-//     if (err) throw err;
-//     res.render('user', {user: user} );
-//     )}
-//   })
-  userRouter.get('/user', isLoggedIn, function(req, res) {
-    console.log("RENDERED PROFILE")
-    User.findOne({_id: req.user._id})
-      .exec(function(err, user){
-        res.render('user.ejs', {user : user} );
-      })
+userRouter.get('/profile', isLoggedIn, function(req, res) {
+  res.redirect('/users/' + req.user._id);
+})
+
+userRouter.route('/about')
+  .get(function(req, res) {
+    res.render('about')
   })
 
-userRouter.route('/user/:id')
+userRouter.route('/users/:id')
+  .get(isLoggedIn, function(req, res) {
+    User.findOne({_id: req.params.id}, function(err, user) {
+      if (err) throw err;
+      res.render('user', {user: user, map_browser_key: map_browser_key} );
+    })
+  })
   .delete(function (req, res) {
-    User.findOneAndRemove({_id: req.params.id}, function(err){
+    User.findOneAndRemove({_id: req.params.id}, {local: req.body}, function(err, user){
       if(err){
         throw err;
         res.json({success:false, message:"Your account could not be deleted"})
       }else{
         res.json({success:"", message: "Hope to see you back soon."});
-        res.redirect('/', {user: user});
+        res.redirect('/', {user: user} );
       }
     })
   })
   .patch(function (req, res) {
-    User.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, function(err, user) {
+    console.log("Trying to update user...")
+    User.findOneAndUpdate( {_id: req.params.id}, {local: req.body}, {new:true}, function(err, user) {
       if (err) throw err;
-      res.json( {success:"Profile updated.", user: user} )
-      res.render('/user/:id')
+      res.json( {success: true, user: user} )
+      res.render('/users')
       })
     })
 
-userRouter.get('/user', isLoggedIn, function(req, res){
-  res.render('user', {user: req.user, map_browser_key: map_browser_key, NodeGeocoder: NodeGeocoder});
-})
+// userRouter.get('/users', isLoggedIn, function(req, res){
+//   res.render('user', {user: req.user, map_browser_key: map_browser_key, NodeGeocoder: NodeGeocoder});
+// })
 
 userRouter.get('/logout', function(req, res){
   req.logout();
@@ -99,12 +100,12 @@ module.exports = userRouter
 //   .get(userCtrl.signup)
 //   // .post(userCtrl.createAccount)
 //
-// userRouter.route('/user/:id')
+// userRouter.route('/users/:id')
 //   .get(userCtrl.show)
 //   // .patch(userCtrl.edit)
 //   // .delete(userCtrl.destroy)
 //
-// userRouter.route('/user/:id/edit')
+// userRouter.route('/users/:id/edit')
 //   .get(userCtrl.editForm)
 //
 // userRouter.route('logout')

@@ -1,3 +1,20 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Raleway', sans-serif;
+  background-color: #F7F0F0
+}
+
+.page-header, h1 {
+  color: #484349;
+  font-weight: 800;
+}
+
+h2 {
+  color: #109648;
+}
+
+label {
+  color: #18A999;
+}
+.padding {
+  20px
 }

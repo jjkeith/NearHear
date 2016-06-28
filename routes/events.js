@@ -2,11 +2,11 @@ var
   express = require('express'),
   passport = require('passport'),
   eventRouter = express.Router(),
-  Post = require('../models/Event.js'),
+  Event = require('../models/Event.js'),
   eventCtrl = require('../controllers/events.js')
 
 
-// in Server.js, a '/events' prefix is established.
+// in Server.js, an '/events' prefix is established.
 eventRouter.route('/')
   .get(eventCtrl.index)
 

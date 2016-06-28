@@ -3,13 +3,13 @@
 //   express = require('express'),
 //   passport = require('passport'),
 //   passportConfig = require('../config/passport.js')
-//   //,userRouter = express.Router()
+  //,userRouter = express.Router()
 //
 // //This will need to be edted
 // module.exports = {
 //   index: index,
 //   login: login,
-//   // authenticate: authenticate,
+  // authenticate: authenticate
 //
 //   signup: signup,
 //   // createAccount: createAccount
@@ -35,12 +35,14 @@
 //   res.render('login', {flash: req.flash('loginMessage')})
 //   }
 //
-// // function authenticate() {
-// //   passport.authenticate('local-login', {
-// //     successRedirect: '/user',
-// //     failureRedirect: '/login'
-// //   })
-// // }
+// function authenticate(req, res) {
+//   return passport.authenticate('local-login', {
+//    successRedirect: '/user',
+//    failureRedirect: '/',
+//    failureFlash: true
+//
+//   })
+// }
 //
 //
 // // Signup Routes

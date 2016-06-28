@@ -2,32 +2,32 @@
 <html>
 
 <!-- Sourcing in javascript -->
-<script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
-<script type="text/javascript"  src="js/socket.io-1.4.5.js"></script>
-<script type="text/javascript"src= "js/moment.js"></script>
+<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript"  src="/js/socket.io-1.4.5.js"></script>
+<script type="text/javascript"src= "/js/moment.js"></script>
 
 <!-- Sourcing in Bootstrapp -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
 <!-- Sourcing in CSS -->
-<link rel='stylesheet' type="text/css" href="css/styles.css">
+<link rel='stylesheet' type="text/css" href="/css/styles.css">
+
+<!-- Sourcing in Raleway font -->
+<link href='https://fonts.googleapis.com/css?family=Raleway:400,900' rel='stylesheet' type='text/css'>
 
   <head>
     <meta charset="utf-8">
     <title>Project 3</title>
   </head>
   <body>
-    <div class="jumbotron">
-    <h1>Near Hear</h1>
-    <% include ./partials/navbar %>
+    <div class="page-header">
+      <h1>Near Hear</h1>
+      <% include ./partials/navbar %>
     </div>
-
 
     <div class="container">
-
-        <%- body %>
+      <%- body %>
     </div>
-
 
   </body>
 </html>
