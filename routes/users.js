@@ -56,9 +56,8 @@ userRouter.route('/user/:id')
       })
     })
 
-userRouter.get('/user', isLoggedIn, function(req, res){
-  res.render('user', {user: req.user});
-})
+   userRouter.get('/user', isLoggedIn, function(req, res){
+       res.render('user', {user: req.user, map_browser_key: map_browser_key, NodeGeocoder: NodeGeocoder});
 
 userRouter.get('/logout', function(req, res){
   req.logout();
