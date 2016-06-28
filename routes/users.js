@@ -31,9 +31,9 @@
 
     })
 
-    userRouter.get('logout', function(req, res){
-      req.logout()
-      res.redirect('/')
+    userRouter.get('/logout', function(req, res){
+      req.logout();
+      res.redirect('/');
     })
 
     function isLoggedIn(req, res, next) {
