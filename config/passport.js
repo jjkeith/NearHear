@@ -23,6 +23,7 @@ passport.use('local-signup', new LocalStrategy({
   console.log("inside of local signup");
 // check to see if the email is taken
   User.findOne({'local.email': email}, function(err, user){
+
     if (err) return done(err)
     //the first argument in done is if it returns false
     if (user) return done(null, false, req.flash('signupMessage', 'That email is taken.'))

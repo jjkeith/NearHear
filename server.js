@@ -64,13 +64,13 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash() )
 
-//root route
+// root route
 app.get('/', function(req,res){
 	res.render('index')
 })
 
 app.use('/', userRoutes)
-// app.use('/events/', eventRoutes)
+app.use('/events', eventRoutes)
 
 http.listen(port, function(){
 	console.log("Server running on port", port)
