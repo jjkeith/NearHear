@@ -1,9 +1,12 @@
 var
    express = require('express'),
    passport = require('passport'),
-   userRouter = express.Router()
+   userRouter = express.Router(),
+   dotenv = require('dotenv').load({silent: true})
    // Post = require('../models/User.js'),
    // userCtrl = require('../controllers/users.js')
+
+   var map_browser_key = process.env.MAP_BROWSER_KEY;
 
    userRouter.route('/login')
      .get(function(req, res){
@@ -27,7 +30,7 @@ var
 
 
    userRouter.get('/user', isLoggedIn, function(req, res){
-       res.render('user', {user: req.user});
+       res.render('user', {user: req.user, map_browser_key: map_browser_key, NodeGeocoder: NodeGeocoder});
 
    })
 

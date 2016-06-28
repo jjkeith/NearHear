@@ -6,3 +6,17 @@
   <input type="text" id="city-state-zip" placeholder="City, State, Zip Code">
   <button type="button" id="search-button" name="button">Search</button>
 </form>
+
+<script type="text/javascript">
+  var options = {
+    provider: 'google',
+    httpAdapter: 'https',
+    apiKey: 'map_browser_key',
+    formatter: null         // 'gpx', 'string', ...
+  };
+  var geocoder = NodeGeocoder(options);
+  //TODO change first arg to accessform  input data
+  geocoder.geocode('29 champs elysée paris', function(err, res) {
+  console.log(res);
+  });
+</script>
