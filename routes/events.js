@@ -6,11 +6,11 @@ var
   eventCtrl = require('../controllers/events.js')
 
 
-
-eventRouter.route('/events')
+// in Server.js, a '/events' prefix is established.
+eventRouter.route('/')
   .get(eventCtrl.index)
 
-eventRouter.route('event/:id')
+eventRouter.route('/:id')
   .get(eventCtrl.show)
 
 module.exports = eventRouter
