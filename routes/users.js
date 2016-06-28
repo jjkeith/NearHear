@@ -3,7 +3,10 @@ var
    passport = require('passport'),
    userRouter = express.Router()
    User = require('../models/User.js'),
+   dotenv = require('dotenv').load({silent: true})
    // userCtrl = require('../controllers/users.js')
+
+ var map_browser_key = process.env.MAP_BROWSER_KEY;
 
 userRouter.route('/login')
   .get(function(req, res){
