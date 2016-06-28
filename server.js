@@ -16,7 +16,8 @@ var
 	request = require('request'),
 	dotenv = require('dotenv').load({silent: true}),
 	http = require('http').Server(app),
-	io = require('socket.io')(http)
+	io = require('socket.io')(http),
+	nodeGeocoder = require('node-geocoder');
 
 	mongoose.connect(process.env.DB_URL, function(err){
 		if (err) throw err;
