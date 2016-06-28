@@ -20,7 +20,7 @@ userRouter.route('/login')
 
 userRouter.route('/user/:id/edit')
   .get(function(req, res) {
-    User.findOne({_id: req.params.id}).exec(function(err, user){
+    User.findOne({id: req.params.id}).exec(function(err, user){
     if (err) throw err;
     res.render('edit', {user: user})
     })
@@ -28,36 +28,51 @@ userRouter.route('/user/:id/edit')
 
 userRouter.route('/signup')
   .get(function(req, res){
-    res.render('signup', {flash: req.flash('signupMessage')})
-})
+    res.render('signup', {flash: req.flash('signupMessage')} )
+  })
   .post(passport.authenticate('local-signup',{
     successRedirect: '/user',
     failureRedirect: '/signup'
-}))
+  }))
+
+// userRouter.route('/user/:id')
+//   .get(function(req, res) {
+//     User.findOne({_id: req.params.id}.exec(function(err, user) {
+//     if (err) throw err;
+//     res.render('user', {user: user} );
+//     )}
+//   })
+  userRouter.get('/user', isLoggedIn, function(req, res) {
+    console.log("RENDERED PROFILE")
+    User.findOne({_id: req.user._id})
+      .exec(function(err, user){
+        res.render('user.ejs', {user : user} );
+      })
+  })
 
 userRouter.route('/user/:id')
-  .get(function(req, res) {
-    User.findById(req.params.id, function(err, user){
-    if (err) throw err;
-    res.render('user', {user: user});
-    })
-  })
   .delete(function (req, res) {
-    User.findByIdAndRemove(req.params.id, function(err, user) {
-      if(err) throw err;
-      res.redirect('/', {user: user})
+    User.findOneAndRemove({_id: req.params.id}, function(err){
+      if(err){
+        throw err;
+        res.json({success:false, message:"Your account could not be deleted"})
+      }else{
+        res.json({success:"", message: "Hope to see you back soon."});
+        res.redirect('/', {user: user});
+      }
     })
   })
   .patch(function (req, res) {
-      User.findById(req.params.id, req.body, { new: true}, function(err, user) {
-        if (err) throw err;
-        res.json(user)
-        res.render('/user/:id', {user: user})
+    User.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, function(err, user) {
+      if (err) throw err;
+      res.json( {success:"Profile updated.", user: user} )
+      res.render('/user/:id')
       })
     })
 
-   userRouter.get('/user', isLoggedIn, function(req, res){
-       res.render('user', {user: req.user, map_browser_key: map_browser_key, NodeGeocoder: NodeGeocoder});
+userRouter.get('/user', isLoggedIn, function(req, res){
+  res.render('user', {user: req.user, map_browser_key: map_browser_key, NodeGeocoder: NodeGeocoder});
+})
 
 userRouter.get('/logout', function(req, res){
   req.logout();
