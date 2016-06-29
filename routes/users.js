@@ -48,9 +48,11 @@ userRouter.route('/users/:id')
   .get(isLoggedIn, function(req, res) {
     User.findOne({_id: req.params.id}, function(err, user) {
       if (err) throw err;
-      res.render('users', {user: user, map_browser_key: map_browser_key} );
+        res.render('users', {user: user, map_browser_key: map_browser_key});
+      // })
     })
   })
+
   .delete(function (req, res) {
     User.findOneAndRemove({_id: req.params.id}, {local: req.body}, function(err, user){
       if(err){
