@@ -10,6 +10,7 @@ var
 	bodyParser = require('body-parser'),
 	methodOverride = require('method-override'),
 	session = require('express-session'),
+	favicon = require('serve-favicon'),
 
 	passport = require('passport'),
 	passportConfig = require('./config/passport.js'),
@@ -98,7 +99,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash() );
-// app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.use(function(req,res,next){
 	res.locals.currentUser = req.user
