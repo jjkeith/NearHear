@@ -1,4 +1,4 @@
-<nav class=" navbar-fixed-top navbar-transparent" role = "navigation">
+<nav class=" navbar-fixed-top navbar " role = "navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -13,6 +13,7 @@
       <ul class="nav navbar-nav navbar-right">
 <% if(isLoggedIn) { %>
   <li><a href="#">Welcome, <%= user.local.username %></a></li>
+  <% } else { %>
   <% } %>
 <!-- Dropdown shown to users who are logged in -->
 <li class="dropdown">
