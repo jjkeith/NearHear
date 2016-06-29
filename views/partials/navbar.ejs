@@ -5,31 +5,33 @@
       <a class="navbar-brand" href="/">
         <img alt="Brand" class="logo" src="/../logo_no_words.png" alt="Near Hear" />
       </a>
-
       <a class="navbar-brand" href="#">Near Hear</a>
       <!-- I want this to be a bigger font for computer displays, but scale down for mobile. -->
     </div>
 
     <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
       <ul class="nav navbar-nav navbar-right">
+<% if(isLoggedIn) { %>
+  <li><a href="#">Welcome, <%= user.local.username %></a></li>
+  <% } %>
 <!-- Dropdown shown to users who are logged in -->
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options <span class="caret"></span></a>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options<span class="caret"></span></a>
   <ul class="dropdown-menu">
-<% if(isLoggedIn) { %>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/events">Events</a></li>
-            <li><a href="/edit">Edit</a></li>
-            <!-- <li><a href="/about">About</a></li> -->
-            <li role="separator" class="divider"></li>
-            <li><a href="/logout">Log Out</a></li>
+    <% if(isLoggedIn) { %>
+      <li><a href="/profile">Profile</a></li>
+      <li><a href="/events">Events</a></li>
+      <li><a href="/edit">Edit</a></li>
+      <!-- <li><a href="/about">About</a></li> -->
+      <li role="separator" class="divider"></li>
+      <li><a href="/logout">Log Out</a></li>
 
 <!-- Dropdown shown to users who are not logged in -->
-<% } else { %>
+    <% } else { %>
             <li><a href="/login">Login</a></li>
             <li><a href="/signup">Sign Up</a></li>
             <!-- <li><a href="/about">About</a></li> -->
-<% } %>
+    <% } %>
           </ul>
         </li>
       </ul>
