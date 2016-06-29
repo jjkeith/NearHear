@@ -15,12 +15,14 @@
 
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
-      <input type="text" id="address-input" placeholder="Enter Address">
+      <input type="text" class="form-control" id="address-input" placeholder="Enter Address">
     </div>
   </div>
 
+<div class="padding"></div>
+
   <div class="row">
-    <div class="col-sm-6 col-sm-offset-8">
+    <div class="col-sm-6 col-sm-offset-3">
       <button type="submit" class="btn btn-primary">Search</button>
     </div>
   </div>
@@ -43,7 +45,7 @@ $('#search-form').submit(function() {
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map-container'), {
-    center: {lat: <%= lat %>, lng: <%= lng %>},
+    center: {lat: [SQUID] lat [SQUID], lng: [SQUID] lng [SQUID]},
     zoom: 8
   });
 }

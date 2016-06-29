@@ -7,25 +7,6 @@ var
    userCtrl = require('../controllers/users.js'),
    map_browser_key = process.env.MAP_BROWSER_KEY
 
-userRouter.route('/login')
-  .get(function(req, res){
-    res.render('login', {flash: req.flash('loginMessage')})
-  })
-  // .post(userCtrl.authenticate())
-  .post(passport.authenticate('local-login', {
-     successRedirect: '/profile',
-     failureRedirect: '/',
-     failureFlash: true
-  }))
-
-userRouter.route('/users/:id/edit')
-  .get(function(req, res) {
-    User.findOne({_id: req.params._id}, function(err, user) {
-      console.log(req.params.id);
-      if (err) throw err;
-      res.render('edit', {user: user} )
-    })
-  })
 
 userRouter.route('/signup')
   .get(function(req, res){
@@ -36,18 +17,32 @@ userRouter.route('/signup')
     failureRedirect: '/signup'
   }))
 
-userRouter.get('/profile', isLoggedIn, function(req, res) {
-  res.redirect('/users/' + req.user._id);
-})
+userRouter.route('/login')
+  .get(function(req, res){
+    res.render('login', {flash: req.flash('loginMessage')})
+  })
+  .post(passport.authenticate('local-login', {
+     successRedirect: '/profile',
+     failureRedirect: '/',
+     failureFlash: true
+  }))
 
 userRouter.get('/edit', isLoggedIn, function(req, res) {
   res.redirect('/users/' + req.user._id + '/edit');
 })
 
-userRouter.route('/about')
+userRouter.route('/users/:id/edit')
   .get(function(req, res) {
-    res.render('about')
+    User.findOne({_id: req.params._id}, function(err, user) {
+      console.log(req.params.id);
+      if (err) throw err;
+      res.render('edit', {user: user} )
+    })
   })
+
+userRouter.get('/profile', isLoggedIn, function(req, res) {
+  res.redirect('/users/' + req.user._id);
+})
 
 userRouter.route('/users/:id')
   .get(isLoggedIn, function(req, res) {
@@ -71,11 +66,16 @@ userRouter.route('/users/:id')
     console.log("Trying to update user...")
     User.findOneAndUpdate( {_id: req.params.id}, {local: req.body}, {new:true}, function(err, user) {
       if (err) throw err;
-      res.json( {success: true, user: user} )
-      // user.local.password = user.generateHash(password)
+      // res.json( {success: true, user: user} )
+      user.local.password = user.generateHash(password)
       res.render('/users')
       })
     })
+
+userRouter.route('/about')
+  .get(function(req, res) {
+    res.render('about')
+  })
 
 // userRouter.get('/users', isLoggedIn, function(req, res){
 //   res.render('user', {user: req.user, map_browser_key: map_browser_key, NodeGeocoder: NodeGeocoder});

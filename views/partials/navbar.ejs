@@ -1,10 +1,66 @@
-Temp NavBar:
+<nav class="navbar navbar-default navbar-fixed-top  ">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        <img alt="Brand" class="logo" src="/../logo_no_words.png" alt="Near Hear" />
+      </a>
 
-<a href="/">Home</a> |
-<a href="/about">About</a> |
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Near Hear</a>
+      <!-- I want this to be a bigger font for computer displays, but scale down for mobile. -->
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-right">
+<!-- These list items will go in a dropdown. Login/edit/profile will only display if logged in.  -->
+        <li><a href="/about">About</a></li>
+        <li><a href="/login">Log In</a></li>
+        <li><a href="/logout">Log Out</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="/users/:id/edit">Edit</a></li>
+
+<!-- Dropdown to be filled in later when JS is working -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">TK <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="padding"></div>
+
+<!-- Temp NavBar: -->
+
+<!-- <a href="/">Home</a> | -->
+<!-- <a href="/about">About</a> |
 <a href="/login">Log In</a> |
 <a href="/signup">Sign Up</a> |
 <a href="/profile">Profile</a> |
 <a href="/logout">Log Out</a> |
 <a href="/events">Events</a> |
-<a href="/edit">Edit</a>
+<a href="/users/:id/edit">Edit</a> -->
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $(".dropdown-toggle").dropdown();
+});
+
+</script>

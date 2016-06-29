@@ -1,6 +1,5 @@
 # Project3
 
-Be sure to run the following when you're getting started:
-`npm install --save body-parser bcrypt-nodejs connect-flash cookie-parser ejs express-ejs-layouts express-session morgan passport passport-local express mongoose`
+coolor: https://coolors.co/app/484349-f7f0f0-8af3ff-18a999-109648.
 
-If you add more npm's then please make a note of it here, so the rest of us can add them too. 
+need a list of NPMs.
