@@ -41,12 +41,14 @@ $('#search-form').submit(function() {
   return false;
 });
 
+$( document ).ready(function(){
 function initMap() {
   map = new google.maps.Map(document.getElementById('map-container'), {
-    center: {lat: <%= lat %>, lng: <%= lng %>},
+    center: {lat: <%= startingFocusCoords[0] %>, lng: <%= startingFocusCoords[1] %>},
     zoom: 8
   });
 }
+})
 
 socket.on('search-coords', function(search) {
   // console.log('in index view, search is:', search);
