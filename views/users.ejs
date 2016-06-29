@@ -92,7 +92,8 @@ function placeMarker(latLng, map, eventObj) {
   marker.addListener('click', function(){
     console.log('you clicked me');
     console.log(this.eventInfo)
-    var contentString = this.eventInfo.artists[0].name + ' AT ' + this.eventInfo.venue.name 
+    var eventPageLink = '<br><button href="/event">More Info</button>'
+    var contentString = this.eventInfo.artists[0].name + ' AT ' + this.eventInfo.venue.name + eventPageLink
     var infowindow = new google.maps.InfoWindow({
       content: contentString
     });
