@@ -47,24 +47,16 @@ socket.on('send chat', function(msg){
 	io.emit('r chat', msg)
 	console.log(msg);
 })
+})
 
-socket.on('send-search', function(search) {
-	console.log('in server.js, socket.on callbackfunction:', search);
-	var options = {
-		provider: 'google',
-		httpAdapter: 'https',
-		apiKey: map_browser_key,
-		formatter: null         // 'gpx', 'string', ...
-	};
+// socket.on('send-search', function(search) {
+// 	console.log('in server.js, socket.on callbackfunction:', search);
+	//
 	// var apiUrl = "http://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=dc6zaTOxFJmzC"; -----uncomment this line
-	var geocoder = NodeGeocoder(options);
-	console.log('var geocoder set to:', geocoder);
-	geocoder.geocode(search, function(err, res) {
-		if(err) return console.log(err);
-		io.emit('search-coords', res);
-	});
-});
-});
+
+// 	});
+// });
+// });
 
 // Application-wide middleware:
 app.use(logger('dev'))
@@ -110,6 +102,34 @@ app.use(function(req,res,next){
 // Establish base routes
 app.use('/', userRoutes)
 // app.use('/events', eventRoutes)
+
+// move this to events router when it's ready:
+app.get('/search', function(req, res) {
+	// console.log(req.query)
+	res.json({message: "Stuff coming back from server..."})
+})
+
+app.post('/geocode', function(req, res){
+	var address = req.body.data
+	// console.log('GEOOOOCODEEE:', address);
+	var options = {
+		provider: 'google',
+		httpAdapter: 'https',
+		apiKey: map_browser_key,
+		formatter: null         // 'gpx', 'string', ...
+	};
+	var geocoder = NodeGeocoder(options);
+	// console.log('var geocoder set to:', geocoder);
+	geocoder.geocode(address, function(err, geo) {
+	if(err) return console.log(err);
+  res.json({latitude: geo[0].latitude, longitude: geo[0].longitude})
+});
+
+// 	geocoder.geocode(req.data.body, function(err, res) {
+// 		if(err) return console.log(err);
+// 		console.log('RESPONSE:', res);
+// })
+})
 
 http.listen(port, function(){
 	console.log("Server running on port 3000")
