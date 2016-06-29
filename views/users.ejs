@@ -1,37 +1,42 @@
-<div class="row">
-  <div class="col-sm-6 col-sm-offset-3">
-    <h4>Welcome, <%= user.local.username %></h4>
-  </div>
-</div>
-
 <div class="padding"></div>
 
 <form id ="search-form" method="GET">
-  <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
+  <div class="form-group row">
+    <div class="col-sm-6">
       <h2>Search for Events</h2>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
-      <input type="text" id="address-input" placeholder="Enter Address" value= '<%= user.local.zipcode %>' >
+  <div class="form-group row">
+    <label for="inputAddress" class="col-sm-2 form-control-label">Enter Address</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="address-input" placeholder="Enter Address" value= '<%= user.local.zipcode %>'>
     </div>
   </div>
 
-<div class="padding"></div>
+  <div class="form-group row">
+    <label for="inputRadius" class="col-sm-2 form-control-label">Search Radius</label>
+    <div class="col-sm-4">
+      <input type="number" class="form-control" id="radius-input" placeholder="Enter Search Radius" value= '10'>
+    </div>
+  </div>
 
-  <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
+  <div class="form-group row">
+    <div class="col-sm-4 col-sm-offset-2">
       <button type="submit" class="btn btn-primary">Search</button>
     </div>
   </div>
 
 </form>
 
+<div class="padding"></div>
 
 <!-- TODO for testing - needs to be moved to events.ejs -->
-<div id="map-container" style="width:500px;height:380px;"></div>
+<div class="row">
+  <div id="map-container" class="col-sm-6">
+
+  </div>
+</div>
 
 <script type="text/javascript">
 // var socket = io();
@@ -40,11 +45,14 @@ $('#search-form').submit(function() {
 
   // socket.emit('send-search', $('#address-input').val());
   var searchAddress = $('#address-input').val()
+  var searchRadius = $('#radius-input').val()
+
+
   $.ajax({
     url: '/geocode',
     method: 'POST',
     contentType: 'application/json',
-    data: JSON.stringify({data: searchAddress})
+    data: JSON.stringify({data: searchAddress}, {data: searchRadius})
   })
   .done(function(data){
     console.log('client side dataaasssss', data);
@@ -57,16 +65,14 @@ $('#search-form').submit(function() {
       queryData.events.forEach(function(el){
         var latLng = {lat: el.venue.latitude, lng: el.venue.longitude}
         placeMarker(latLng, map, el)
-
       });
 
 })
 })
 
-
-
-
   $('#address-input').val('');
+  $('#radius-input').val('');
+
 
   console.log('message sending');
   return false;
@@ -78,8 +84,6 @@ function initMap() {
     zoom: 8
   });
 }
-
-
 
 function placeMarker(latLng, map, eventObj) {
     // console.log('placemarker:', latLng, map);
