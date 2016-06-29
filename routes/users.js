@@ -60,7 +60,6 @@ userRouter.route('/users/:id')
     User.findOne({_id: req.params.id}, function(err, user) {
       if (err) throw err;
         res.render('users', {user: user, map_browser_key: map_browser_key});
-      // })
     })
   })
   .patch(function (req, res) {

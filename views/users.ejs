@@ -58,19 +58,19 @@ $('#search-form').submit(function() {
   })
   .done(function(data){
     console.log('client side dataaasssss', data);
-    $.get('/search?query=' + data )
+    $.get('/search?query=' + data.latitude + ', ' + data.longitude )
     .done(function(queryData){
-      console.log(queryData)
+      console.log('qqquerryryryryryr datataa', queryData)
       console.log(data.latitude, data.longitude);
-    //   function initMap() {
-    //     map = new google.maps.Map(document.getElementById('map-container'), {
-    //       center: {lat: data.latitude, lng: data.longitude},
-    //       zoom: 8
-    //     });
-    // }
-      console.log(map)
       map.panTo({lat: data.latitude, lng: data.longitude});
-    })
+      var latLng = {lat: data.latitude, lng: data.longitude}
+      queryData.events.forEach(function(el){
+        var latLng = {lat: el.venue.latitude, lng: el.venue.longitude}
+        placeMarker(latLng, map, el)
+
+      });
+
+})
 })
 
 
@@ -88,6 +88,28 @@ function initMap() {
     zoom: 8
   });
 }
+
+
+
+function placeMarker(latLng, map, eventObj) {
+    // console.log('placemarker:', latLng, map);
+    var marker = new google.maps.Marker({
+    position: latLng,
+    map: map,
+    eventInfo: eventObj
+  });
+
+  marker.addListener('click', function(){
+    console.log('you clicked me');
+    console.log(this.eventInfo)
+    var contentString = this.eventInfo.artists[0].name + ' AT ' + this.eventInfo.venue.name 
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    infowindow.open(map, marker);
+  })
+}
+
 
 // socket.on('search-coords', function(search) {
 //   // console.log('in index view, search is:', search);
