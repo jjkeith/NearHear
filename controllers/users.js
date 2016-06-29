@@ -15,8 +15,8 @@
 //   // createAccount: createAccount
 //   //
 //   show: show,
-//   // // user/:id/patch
-//   // // user/:id/delete
+//   // // users/:id/patch
+//   // // users/:id/delete
 //
 //   editForm: editForm,
 //
@@ -59,7 +59,7 @@
 // // }
 //
 //
-// // user/:id Routes
+// // users/:id Routes
 // function show () {
 //   isLoggedIn(req, res);
 //   res.render( 'users', {user: req.user} );
@@ -72,7 +72,7 @@
 // //need to look at passport documentation to figure out if there's special syntax needed for this.
 //
 //
-// // user/:id/edit Route
+// // users/:id/edit Route
 // function editForm () {
 //   res.render('edit');
 // }

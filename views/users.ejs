@@ -1,9 +1,24 @@
-<h2>Welcome, <%= user.local.username %></h2>
+<!-- <div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <h4>Welcome, <%= user.local.username %></h4>
+  </div>
+</div>
 
+<div class="padding"></div>
 
-<h1>Search for Events</h1>
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <h2>Search for Events</h2>
+  </div>
+</div>
+
 <form id ="search-form" method="GET">
-  <input type="text" id="address-input" placeholder="Enter Address">
+  <div class="form-group row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <input type="text" id="address-input" placeholder="Enter Address">
+    </div>
+  </div>
+
   <button>Search</button>
 </form>
 
@@ -16,4 +31,4 @@ $('#search-form').submit(function() {
   console.log('message sending');
   return false;
 });
-</script>
+</script> -->

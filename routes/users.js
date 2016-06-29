@@ -20,9 +20,10 @@ userRouter.route('/login')
 
 userRouter.route('/users/:id/edit')
   .get(function(req, res) {
-    User.findById(req.params.id, function(err, user) {
-    if (err) throw err;
-    res.render('edit', {user: user} )
+    User.findOne({_id: req.params._id}, function(err, user) {
+      console.log(req.params.id);
+      if (err) throw err;
+      res.render('edit', {user: user} )
     })
   })
 
@@ -38,6 +39,10 @@ userRouter.route('/signup')
 userRouter.get('/profile', isLoggedIn, function(req, res) {
   res.redirect('/users/' + req.user._id);
 })
+
+// userRouter.get('/edit', isLoggedIn, function(req, res) {
+//   res.redirect('/users/' + req.user._id + "/edit");
+// })
 
 userRouter.route('/about')
   .get(function(req, res) {
