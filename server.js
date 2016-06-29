@@ -32,21 +32,6 @@ mongoose.connect(process.env.DB_URL, function(err){
 	console.log('connected to mongodb (passport-authentication)');
 })
 
-// Starts of the Bands in Town Search -- Not complete
-app.get('/events/:search', function(req, res){
-  var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.params.search.lat + req.params.search.lon + '&radius=' + req.params.search.radius + 'format=json&app_id=WDISM23';
-  console.log(req.params.search);
-  request(apiUrl, function(err, response){
-    if (err) throw err;
-
-    var events = JSON.parse(response.body)
-    events[0].datetime
-    // res.send('<li>'+ datetime + '</li>')
-    res.json(events)
-    res.render('whateverview', {events: datetime})
-  })
-})
-
 
 var map_browser_key = process.env.MAP_BROWSER_KEY;
 // io socket connection listener
@@ -95,11 +80,6 @@ app.use(methodOverride(function(req, res){
 }))
 app.use(express.static('public'))
 
-app.use(function(req,res,next){
-  res.locals.login = req.isAuthenticated()
-  next()
-})
-
 // Environment port
 var port = process.env.PORT || 3000
 
@@ -119,6 +99,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash() );
 // app.use(favicon(__dirname + '/public/favicon.ico'));
+
+app.use(function(req,res,next){
+	res.locals.currentUser = req.user
+  res.locals.isLoggedIn = !!req.user
+  next()
+})
 
 // Establish base routes
 app.use('/', userRoutes)

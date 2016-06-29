@@ -19,7 +19,7 @@ passport.deserializeUser(function(id, done){
 passport.use('local-signup', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
-  passReqToCallback: 'true' 
+  passReqToCallback: 'true'
 }, function(req, email, password, done){
   console.log("inside of local signup");
 // check to see if the email is taken
@@ -51,7 +51,7 @@ passport.use('local-login', new LocalStrategy({
     if (err) return done(err);
     if (!user) return done(null, false, req.flash('loginMessage', 'No user with that email found.'));
     if (!user.validPassword(password)) return done(null, false, req.flash('loginMessage', 'Incorrect password.'));
-
+    console.log("found user error not hit yet");
     return done(null, user)
   })
 }))

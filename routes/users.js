@@ -63,11 +63,19 @@ userRouter.route('/users/:id')
     })
   })
   .patch(function (req, res) {
-    User.findOneAndUpdate( {_id: req.params.id}, {local: req.body}, {new:true}, function(err, user) {
+    User.findOne({_id: req.params.id}, function(err, user) {
       if (err) throw err;
-      // console.log("U.L.PW: ", user.local.password);
-      // user.local.password = user.generateHash(password)
-      res.render('/profile', {user: user} );
+      // console.log("PW: ", req.body.password);
+      if(req.body.username) user.local.username = req.body.username
+      if(req.body.email) user.local.email = req.body.email
+      if(req.body.username) user.local.username = req.body.username
+      if (req.body.password) {
+        user.local.password = user.generateHash(req.body.password)
+      }
+      user.save(function(err, user) {
+        if(err) return console.log(err)
+        res.redirect('/profile');
+      })
     })
   })
   .delete(function (req, res) {
