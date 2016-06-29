@@ -10,6 +10,7 @@
   "author": "JJ, Nick and Susan",
   "license": "ISC",
   "dependencies": {
+    "bandsintown": "^1.0.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "connect-flash": "^0.1.1",
@@ -28,5 +29,8 @@
     "passport-local": "^1.0.0",
     "request": "^2.72.0",
     "socket.io": "^1.4.8"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
   }
 }

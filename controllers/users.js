@@ -37,7 +37,7 @@
 //
 // function authenticate(req, res) {
 //   return passport.authenticate('local-login', {
-//    successRedirect: '/user',
+//    successRedirect: '/users',
 //    failureRedirect: '/',
 //    failureFlash: true
 //
@@ -62,7 +62,7 @@
 // // user/:id Routes
 // function show () {
 //   isLoggedIn(req, res);
-//   res.render( 'user', {user: req.user} );
+//   res.render( 'users', {user: req.user} );
 // }
 //
 // function edit() {}
