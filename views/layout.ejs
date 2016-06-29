@@ -2,12 +2,18 @@
 <html>
 
 <!-- Sourcing in javascript -->
-<script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
+<!-- Bootstrap requires an older version of JQuery -->
+<!-- <script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script> -->
+<script type="text/javascript" src="/js/jquery-2.2.4.min.js"></script>
 <script type="text/javascript"  src="/js/socket.io-1.4.5.js"></script>
 <script type="text/javascript"src= "/js/moment.js"></script>
 
 <!-- Sourcing in Bootstrapp -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<!-- Sourcing in AJAX -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
 <!-- Sourcing in CSS -->
 <link rel='stylesheet' type="text/css" href="/css/styles.css">
@@ -17,16 +23,19 @@
 
   <head>
     <meta charset="utf-8">
-    <title>Project 3</title>
+    <title>Near Hear</title>
   </head>
   <body>
-    <div class="navbar-spacer"
-    <%- include ./partials/navbar %>
-    </div>
 
-
+      <!-- <div id="background"></div> -->
     <div class="container">
+
+
+      <%- include ./partials/navbar %>
+      <div class="padding"></div>
+
       <%- body %>
+
     </div>
 
   </body>

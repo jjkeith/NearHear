@@ -8,6 +8,13 @@ var
    map_browser_key = process.env.MAP_BROWSER_KEY
 
 
+// root route
+userRouter.route('/')
+  .get(function(req, res) {
+    res.render('index')
+  })
+
+// Sign Up Routse
 userRouter.route('/signup')
   .get(function(req, res){
     res.render('signup', {flash: req.flash('signupMessage')} )
@@ -17,33 +24,37 @@ userRouter.route('/signup')
     failureRedirect: '/signup'
   }))
 
+// Login Routes
 userRouter.route('/login')
   .get(function(req, res){
     res.render('login', {flash: req.flash('loginMessage')})
   })
   .post(passport.authenticate('local-login', {
-     successRedirect: '/profile',
-     failureRedirect: '/',
-     failureFlash: true
-  }))
+    successRedirect: '/profile',
+    failureRedirect: '/',
+    failureFlash: true
+  } ))
 
+// Redirect to the Edit Form
 userRouter.get('/edit', isLoggedIn, function(req, res) {
   res.redirect('/users/' + req.user._id + '/edit');
 })
 
+// Render the Edit Form
 userRouter.route('/users/:id/edit')
-  .get(function(req, res) {
-    User.findOne({_id: req.params._id}, function(err, user) {
-      console.log(req.params.id);
+  .get(isLoggedIn, function(req, res) {
+    User.findOne({_id: req.params.id}, function(err, user) {
       if (err) throw err;
       res.render('edit', {user: user} )
     })
   })
 
+// Redirect to the profile
 userRouter.get('/profile', isLoggedIn, function(req, res) {
   res.redirect('/users/' + req.user._id);
 })
 
+// Render the profile page, delete and patch users
 userRouter.route('/users/:id')
   .get(isLoggedIn, function(req, res) {
     User.findOne({_id: req.params.id}, function(err, user) {
@@ -52,50 +63,61 @@ userRouter.route('/users/:id')
       // })
     })
   })
-
+  .patch(function (req, res) {
+    User.findOne({_id: req.params.id}, function(err, user) {
+      if (err) throw err;
+      // console.log("PW: ", req.body.password);
+      if(req.body.username) user.local.username = req.body.username
+      if(req.body.email) user.local.email = req.body.email
+      if(req.body.username) user.local.username = req.body.username
+      if (req.body.password) {
+        user.local.password = user.generateHash(req.body.password)
+      }
+      user.save(function(err, user) {
+        if(err) return console.log(err)
+        res.redirect('/profile');
+      })
+    })
+  })
   .delete(function (req, res) {
     User.findOneAndRemove({_id: req.params.id}, {local: req.body}, function(err, user){
       if(err){
         throw err;
-        res.json({success:false, message:"Your account could not be deleted"})
-      }else{
-        res.json({success:"", message: "Hope to see you back soon."});
+        res.json( {success:false, message:"Your account could not be deleted"} );
+      } else {
+        res.json( {success:"", message: "Hope to see you back soon."} );
         res.redirect('/', {user: user} );
       }
     })
   })
-  .patch(function (req, res) {
-    console.log("Trying to update user...")
-    User.findOneAndUpdate( {_id: req.params.id}, {local: req.body}, {new:true}, function(err, user) {
-      if (err) throw err;
-      // res.json( {success: true, user: user} )
-      user.local.password = user.generateHash(password)
-      res.render('/users')
-      })
-    })
 
+// Render an About page — probably will be deleted as the index will hold info about the app.
 userRouter.route('/about')
-  .get(function(req, res) {
-    res.render('about')
+  .get( function(req, res) {
+    res.render('about');
   })
+
+// Run the logout function
+userRouter.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+})
+
+// Checks if a user is logged in
+function isLoggedIn(req, res, next) {
+  console.log("isLoggedIn")
+  if(req.isAuthenticated() ) return next();
+    res.redirect('/');
+}
+
+module.exports = userRouter
+
 
 // userRouter.get('/users', isLoggedIn, function(req, res){
 //   res.render('user', {user: req.user, map_browser_key: map_browser_key, NodeGeocoder: NodeGeocoder});
 // })
 
-userRouter.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-})
-
-function isLoggedIn(req, res, next) {
-  console.log("isLoggedIn")
-  if(req.isAuthenticated()) return next()
-    res.redirect('/')
-}
-
-module.exports = userRouter
-
+//************Even if the below never gets uncommented, it will be useful for putting routes in our Readme. ************//
 
 // userRouter.route('/')
 //   .get(userCtrl.index)

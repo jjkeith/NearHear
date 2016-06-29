@@ -10,6 +10,7 @@ var
 	bodyParser = require('body-parser'),
 	methodOverride = require('method-override'),
 	session = require('express-session'),
+	favicon = require('serve-favicon'),
 
 	passport = require('passport'),
 	passportConfig = require('./config/passport.js'),
@@ -30,21 +31,6 @@ var
 mongoose.connect(process.env.DB_URL, function(err){
 	if (err) throw err;
 	console.log('connected to mongodb (passport-authentication)');
-})
-
-//Starts of the Bands in Town Search -- Not complete
-app.get('/events/:search', function(req, res){
-  var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.params.search.lat + req.params.search.lon + '&radius=' + req.params.search.radius + 'format=json&app_id=WDISM23';
-  console.log(req.params.search);
-  request(apiUrl, function(err, response){
-    if (err) throw err;
-
-    var events = JSON.parse(response.body)
-    events[0].datetime
-    // res.send('<li>'+ datetime + '</li>')
-    res.json(events)
-    res.render('whateverview', {events: datetime})
-  })
 })
 
 
@@ -72,8 +58,7 @@ socket.on('send chat', function(msg){
 // });
 // });
 
-
-// application-wide middleware:
+// Application-wide middleware:
 app.use(logger('dev'))
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -88,19 +73,14 @@ app.use(methodOverride(function(req, res){
 }))
 app.use(express.static('public'))
 
-app.use(function(req,res,next){
-  res.locals.login = req.isAuthenticated()
-  next()
-})
-
-// environment port
+// Environment port
 var port = process.env.PORT || 3000
 
-// ejs configuration
+// EJS configuration
 app.set('view engine', 'ejs')
 app.use(ejsLayouts)
 
-// session + passport middleware
+// Session + passport middleware
 app.use(session({
 	cookie: {_expires:60000000},//about 16 hours
 	secret: "catsaresupercute",
@@ -111,13 +91,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash() );
-// app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
-// root route
-app.get('/', function(req,res){
-	res.render('index')
+app.use(function(req,res,next){
+	res.locals.currentUser = req.user
+  res.locals.isLoggedIn = !!req.user
+  next()
 })
 
+// Establish base routes
 app.use('/', userRoutes)
 // app.use('/events', eventRoutes)
 
