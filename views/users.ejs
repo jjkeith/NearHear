@@ -21,14 +21,40 @@
 
   <button>Search</button>
 </form>
+<!- TODO for testing - needs to be moved to events.ejs -->
+<div id="map-container" style="width:500px;height:380px;"></div>
 
 <script type="text/javascript">
 var socket = io();
-// console.log(map_browser_key);
+console.log('user is:', '<%= user.local %>');
 $('#search-form').submit(function() {
   socket.emit('send-search', $('#address-input').val());
   $('#address-input').val('');
   console.log('message sending');
   return false;
 });
-</script> -->
+
+</script>
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map-container'), {
+    center: {lat: <%= lat %>, lng: <%= lng %>},
+    zoom: 8
+  });
+}
+
+socket.on('search-coords', function(search) {
+  // console.log('in index view, search is:', search);
+  // console.log('search.latitude:', search[0].latitude);
+  var focusCoords = [search[0].latitude, search[0].longitude];
+  console.log('in index.html, focusCoords:', focusCoords);
+  var map;
+
+});
+
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg7qsdMIt6_u3lp0AfjJoz41S2C8fyCRg&callback=initMap"
+ async defer>
+
+ </script>
