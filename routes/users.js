@@ -48,7 +48,7 @@ userRouter.route('/users/:id')
   .get(isLoggedIn, function(req, res) {
     User.findOne({_id: req.params.id}, function(err, user) {
       if (err) throw err;
-      res.render('user', {user: user, map_browser_key: map_browser_key} );
+      res.render('users', {user: user, map_browser_key: map_browser_key} );
     })
   })
   .delete(function (req, res) {
@@ -67,6 +67,7 @@ userRouter.route('/users/:id')
     User.findOneAndUpdate( {_id: req.params.id}, {local: req.body}, {new:true}, function(err, user) {
       if (err) throw err;
       res.json( {success: true, user: user} )
+      // user.local.password = user.generateHash(password)
       res.render('/users')
       })
     })
