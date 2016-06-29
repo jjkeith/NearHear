@@ -40,9 +40,9 @@ userRouter.get('/profile', isLoggedIn, function(req, res) {
   res.redirect('/users/' + req.user._id);
 })
 
-// userRouter.get('/edit', isLoggedIn, function(req, res) {
-//   res.redirect('/users/' + req.user._id + "/edit");
-// })
+userRouter.get('/edit', isLoggedIn, function(req, res) {
+  res.redirect('/users/' + req.user._id + '/edit');
+})
 
 userRouter.route('/about')
   .get(function(req, res) {

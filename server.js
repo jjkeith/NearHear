@@ -22,12 +22,31 @@ var
 	http = require('http').Server(app),
 	io = require('socket.io')(http),
 
-	NodeGeocoder = require('node-geocoder');
+	NodeGeocoder = require('node-geocoder'),
 
-	mongoose.connect(process.env.DB_URL, function(err){
-		if (err) throw err;
-		console.log('connected to mongodb (passport-authentication)');
-	})
+	bandsintown = require('bandsintown')('WDISM23')
+
+
+mongoose.connect(process.env.DB_URL, function(err){
+	if (err) throw err;
+	console.log('connected to mongodb (passport-authentication)');
+})
+
+//Starts of the Bands in Town Search -- Not complete
+app.get('/events/:search', function(req, res){
+  var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.params.search.lat + req.params.search.lon + '&radius=' + req.params.search.radius + 'format=json&app_id=WDISM23';
+  console.log(req.params.search);
+  request(apiUrl, function(err, response){
+    if (err) throw err;
+
+    var events = JSON.parse(response.body)
+    events[0].datetime
+    // res.send('<li>'+ datetime + '</li>')
+    res.json(events)
+    res.render('whateverview', {events: datetime})
+  })
+})
+
 
 var map_browser_key = process.env.MAP_BROWSER_KEY;
 // io socket connection listener
