@@ -29,6 +29,7 @@ var
 		console.log('connected to mongodb (passport-authentication)');
 	})
 
+var map_browser_key = process.env.MAP_BROWSER_KEY;
 // io socket connection listener
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -41,6 +42,23 @@ socket.on('send chat', function(msg){
 	io.emit('r chat', msg)
 	console.log(msg);
 })
+
+socket.on('send-search', function(search) {
+	console.log('in server.js, socket.on callbackfunction:', search);
+	var options = {
+		provider: 'google',
+		httpAdapter: 'https',
+		apiKey: map_browser_key,
+		formatter: null         // 'gpx', 'string', ...
+	};
+	// var apiUrl = "http://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=dc6zaTOxFJmzC"; -----uncomment this line
+	var geocoder = NodeGeocoder(options);
+	console.log('var geocoder set to:', geocoder);
+	geocoder.geocode(search, function(err, res) {
+		if(err) return console.log(err);
+		io.emit('search-coords', res);
+	});
+});
 });
 
 
