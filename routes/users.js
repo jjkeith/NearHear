@@ -5,10 +5,7 @@ var
    User = require('../models/User.js'),
    dotenv = require('dotenv').load({silent: true}),
    userCtrl = require('../controllers/users.js'),
-   map_browser_key = process.env.MAP_BROWSER_KEY,
-   app = express(),
-   http = require('http').Server(app),
- 	 io = require('socket.io')(http)
+   map_browser_key = process.env.MAP_BROWSER_KEY
 
 userRouter.route('/login')
   .get(function(req, res){
@@ -59,11 +56,8 @@ userRouter.route('/users/:id')
   .get(isLoggedIn, function(req, res) {
     User.findOne({_id: req.params.id}, function(err, user) {
       if (err) throw err;
-      socket.emit('send-search', user.zipcode)
-      socket.on('search-coords', function(search){
-        var startingFocusCoords = [search[0].latitude, search[0].longitude]
-        res.render('users', {user: user, map_browser_key: map_browser_key}, startingFocusCoords);
-      })
+        res.render('users', {user: user, map_browser_key: map_browser_key});
+      // })
     })
   })
 

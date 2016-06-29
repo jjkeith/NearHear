@@ -15,7 +15,7 @@
 
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
-      <input type="text" id="address-input" placeholder="Enter Address">
+      <input type="text" id="address-input" placeholder="Enter Address" value= '<%= user.local.zipcode %>' >
     </div>
   </div>
 
@@ -32,32 +32,61 @@
 <div id="map-container" style="width:500px;height:380px;"></div>
 
 <script type="text/javascript">
-var socket = io();
-console.log('user is:', '<%= user.local %>');
+// var socket = io();
 $('#search-form').submit(function() {
-  socket.emit('send-search', $('#address-input').val());
+
+
+  // socket.emit('send-search', $('#address-input').val());
+  var searchAddress = $('#address-input').val()
+  $.ajax({
+    url: '/geocode',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({data: searchAddress})
+  })
+  .done(function(data){
+    console.log('client side dataaasssss', data);
+    $.get('/search?query=' + data )
+    .done(function(queryData){
+      console.log(queryData)
+      console.log(data.latitude, data.longitude);
+    //   function initMap() {
+    //     map = new google.maps.Map(document.getElementById('map-container'), {
+    //       center: {lat: data.latitude, lng: data.longitude},
+    //       zoom: 8
+    //     });
+    // }
+      console.log(map)
+      map.panTo({lat: data.latitude, lng: data.longitude});
+    })
+})
+
+
+
+
   $('#address-input').val('');
+
   console.log('message sending');
   return false;
 });
 
-$( document ).ready(function(){
 function initMap() {
   map = new google.maps.Map(document.getElementById('map-container'), {
-    center: {lat: <%= startingFocusCoords[0] %>, lng: <%= startingFocusCoords[1] %>},
+    center: {lat: -34.397, lng: 150.644},
     zoom: 8
   });
 }
-})
 
-socket.on('search-coords', function(search) {
-  // console.log('in index view, search is:', search);
-  // console.log('search.latitude:', search[0].latitude);
-  var focusCoords = [search[0].latitude, search[0].longitude];
-  console.log('in index.html, focusCoords:', focusCoords);
-  var map;
+// socket.on('search-coords', function(search) {
+//   // console.log('in index view, search is:', search);
+//   // console.log('search.latitude:', search[0].latitude);
+//   var focusCoords = [search[0].latitude, search[0].longitude];
+//   console.log('in index.html, focusCoords:', focusCoords);
+//   var map;
+//
+// });
 
-});
+
 
 </script>
 
