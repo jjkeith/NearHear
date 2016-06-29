@@ -32,7 +32,7 @@ mongoose.connect(process.env.DB_URL, function(err){
 	console.log('connected to mongodb (passport-authentication)');
 })
 
-//Starts of the Bands in Town Search -- Not complete
+// Starts of the Bands in Town Search -- Not complete
 app.get('/events/:search', function(req, res){
   var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.params.search.lat + req.params.search.lon + '&radius=' + req.params.search.radius + 'format=json&app_id=WDISM23';
   console.log(req.params.search);
@@ -80,8 +80,7 @@ socket.on('send-search', function(search) {
 });
 });
 
-
-// application-wide middleware:
+// Application-wide middleware:
 app.use(logger('dev'))
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -101,14 +100,14 @@ app.use(function(req,res,next){
   next()
 })
 
-// environment port
+// Environment port
 var port = process.env.PORT || 3000
 
-// ejs configuration
+// EJS configuration
 app.set('view engine', 'ejs')
 app.use(ejsLayouts)
 
-// session + passport middleware
+// Session + passport middleware
 app.use(session({
 	cookie: {_expires:60000000},//about 16 hours
 	secret: "catsaresupercute",
@@ -121,11 +120,7 @@ app.use(passport.session());
 app.use(flash() );
 // app.use(favicon(__dirname + '/public/favicon.ico'));
 
-// root route
-app.get('/', function(req,res){
-	res.render('index')
-})
-
+// Establish base routes
 app.use('/', userRoutes)
 // app.use('/events', eventRoutes)
 

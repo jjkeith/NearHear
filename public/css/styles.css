@@ -49,6 +49,11 @@ label {
   color: #484349;
 }
 
+#map-container {
+  width: 500px;
+  height: 380px;
+}
+
 .padding {
   height: 20px
 }
