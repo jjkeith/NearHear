@@ -90,12 +90,6 @@ userRouter.route('/users/:id')
     })
   })
 
-// Render an About page — probably will be deleted as the index will hold info about the app.
-userRouter.route('/about')
-  .get( function(req, res) {
-    res.render('about');
-  })
-
 // Run the logout function
 userRouter.get('/logout', function(req, res) {
   req.logout();

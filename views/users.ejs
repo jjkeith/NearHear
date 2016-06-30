@@ -45,7 +45,6 @@
 // var socket = io();
 $('#search-form').submit(function() {
 
-
   // socket.emit('send-search', $('#address-input').val());
   var searchAddress = $('#address-input').val()
   var searchRadius = $('#radius-input').val()
@@ -61,7 +60,10 @@ $('#search-form').submit(function() {
     console.log('client side dataaasssss', data);
     $.get('/search?query=' + data.latitude + ', ' + data.longitude )
     .done(function(queryData){
-      eventDisplay.text(JSON.stringify(queryData.events))
+      events = text(JSON.stringify(queryData.events));
+      // eventDisplay.html('<h1>' + event.id + '</h1>')
+
+
       console.log('qqquerryryryryryr datataa', queryData)
       console.log(data.latitude, data.longitude);
       map.panTo({lat: data.latitude, lng: data.longitude});
@@ -71,13 +73,11 @@ $('#search-form').submit(function() {
         var latLng = {lat: el.venue.latitude, lng: el.venue.longitude}
         placeMarker(latLng, map, el)
       });
-
 })
 })
 
   $('#address-input').val('');
   $('#radius-input').val('');
-
 
   console.log('message sending');
   return false;
