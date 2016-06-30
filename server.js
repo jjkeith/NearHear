@@ -11,6 +11,7 @@ var
 	methodOverride = require('method-override'),
 	session = require('express-session'),
 	favicon = require('serve-favicon'),
+	cors = require('cors'),
 
 	passport = require('passport'),
 	passportConfig = require('./config/passport.js'),
@@ -79,6 +80,11 @@ var port = process.env.PORT || 3000
 // EJS configuration
 app.set('view engine', 'ejs')
 app.use(ejsLayouts)
+
+// Enabling CORS for events Routes
+app.get('/events/:id', cors(), function(req, res, next) {
+  res.json( {msg: 'This is CORS-enabled for all origins!'} );
+});
 
 // Session + passport middleware
 app.use(session({

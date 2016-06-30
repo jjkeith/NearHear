@@ -10,6 +10,9 @@ module.exports = {
   show: show
 }
 
+
+
+
 // function searchResults(req, res){
 //   var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.params.search.lat + req.params.search.lon '&radius=' +req.params.search.radius +'format=json&app_id=WDISM23';
 //   console.log(req.params.search);

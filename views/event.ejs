@@ -1,19 +1,36 @@
 <h1 class="artist">Event Page</h1>
-<!-- <h2>manipulate the DOM with the data from the ajax call below</h2> -->
+
 
 
 <script type="text/javascript">
+// var event = sessionStorage.event;
+var event = JSON.parse(sessionStorage.getItem('event'))
 
-$.ajax({
-  url: "http://www.bandsintown.com/event/" + sessionStorage.eventID + "?app_id=WDISM23/",
-  method: 'GET',
-  contentType: 'application/json',
-  data: JSON.stringify({data: event})
+console.log(event);
+console.log(event.url);
+console.log(event.id);
+console.log(event.datetime);
+console.log(event.ticket_url);
+console.log(event.artists[0]);
 
-}).done(function(data) {
-  var eventName = data.name;
-  var eventDetails = data.details;
-  console.log(data);
-});
+
+sessionStorage.setItem('eventID',this.eventInfo.id)
+sessionStorage.setItem('event', JSON.stringify(this.eventInfo))
+
+
+// $.ajax({
+//   // url: "http://www.bandsintown.com/event/" +  "/?app_id=WDISM23",
+//   url: "//api.bandsintown.com/artists/Skrillex/events.json?callback=?&app_id=WDISM23",
+//
+//   method: 'GET'
+//   // contentType: 'application/json',
+//   // or text/plain?
+//   // data: JSON.stringify({data: event})
+//
+// }).done(function(data) {
+//   var eventName = data.name;
+//   var eventDetails = data.details;
+//   console.log(data);
+// });
 
 </script>

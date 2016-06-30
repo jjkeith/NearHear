@@ -30,11 +30,37 @@
     </div>
 </div>
 
+<div class="saved-shows">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date and Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>"Skrillex @ Jack Ü @ FVDED in the Park in Surrey, Canada"</td>
+        <td>"Saturday, July 2, 2016 at 7:00PM"</td>
+        <td><a href="http://www.bandsintown.com/event/11680295/buy_tickets?app_id=YOUR_APP_ID&artist=Skrillex&came_from=67"</a></td>
+      </tr>
+
+
+</div>
+
+<!-- evenetSchema = new Schema({
+  event: {
+    artist: String,
+    venue: String,
+    datetime: String,
+    ticket_url: String
+  }
+}) -->
+
 <script type="text/javascript">
 
 $('#search-form').submit(function() {
 
-  // socket.emit('send-search', $('#address-input').val());
   var searchAddress = $('#address-input').val()
   var eventDisplay = $('#events-display')
 
@@ -79,23 +105,24 @@ function placeMarker(latLng, map, eventObj) {
   eventInfo: eventObj
 });
 
-  marker.addListener('mouseover', function(){
-    console.log(this.eventInfo)
-    var eventId = this.eventInfo.id
-    var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name; // + '</p><button><a href=/events/' + eventId + '>More Info</a></button>'
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-
+marker.addListener('mouseover', function(){
+  console.log(this.eventInfo)
+  var eventId = this.eventInfo.id
+  var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><button><a href=/events/' + eventId + '>Add to my Shows</a></button>'
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
     infowindow.open(map, marker);
     marker.addListener('mouseout', function(){
-      setTimeout(function(){
-            infowindow.close(map, marker);
+      setTimeout(function() {
+        infowindow.close(map, marker);
       }, 800)
     })
     marker.addListener('click', function(){
       console.log("clicked button")
-      sessionStorage.setItem('eventID',this.eventInfo.id)
+
+      sessionStorage.setItem( 'eventID',this.eventInfo.id )
+      sessionStorage.setItem( 'event', JSON.stringify(this.eventInfo) )
       window.location = '/event'
     })
   })
@@ -103,7 +130,7 @@ function placeMarker(latLng, map, eventObj) {
 
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg7qsdMIt6_u3lp0AfjJoz41S2C8fyCRg&callback=initMap"
+<script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyBg7qsdMIt6_u3lp0AfjJoz41S2C8fyCRg&callback=initMap"
  async defer>
 
  </script>

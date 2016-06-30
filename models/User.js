@@ -7,7 +7,15 @@ var
       username: String,
       zipcode: Number,
       email: String,
-      password: String
+      password: String,
+      events: Array
+    }
+  })
+  eventSchema = new Schema({
+    event: {
+      title: String,
+      datetime: String,
+      ticket_url: String
     }
   })
 
