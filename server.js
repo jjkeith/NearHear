@@ -111,14 +111,13 @@ app.get('/event', function(req, res){
 })
 // move this to events router when it's ready:
 app.get('/search', function(req, res) {
-  console.log('queryyyyy', req.query.query);
-	var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.query.query +  '&radius=10format=json&app_id=WDISM23'
+	var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.query.query +  '&radius=' + req.query.radius + 'format=json&app_id=WDISM23'
 	request(apiUrl, function(err, response){
 		console.log(apiUrl);
     if (err) throw err;
     var events = JSON.parse(response.body)
-	res.json({message: "Stuff coming back from server...", events: events})
-})
+		res.json({message: "Stuff coming back from server...", events: events})
+	})
 })
 
 app.post('/geocode', function(req, res){
