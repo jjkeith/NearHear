@@ -13,8 +13,7 @@ var
   })
   eventSchema = new Schema({
     event: {
-      artist: String,
-      venue: String,
+      title: String,
       datetime: String,
       ticket_url: String
     }
