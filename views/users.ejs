@@ -37,6 +37,9 @@
 
   </div>
 </div>
+<div id="events-display">
+
+</div>
 
 <script type="text/javascript">
 // var socket = io();
@@ -46,7 +49,7 @@ $('#search-form').submit(function() {
   // socket.emit('send-search', $('#address-input').val());
   var searchAddress = $('#address-input').val()
   var searchRadius = $('#radius-input').val()
-
+  var eventDisplay = $('#events-display')
 
   $.ajax({
     url: '/geocode',
@@ -58,10 +61,12 @@ $('#search-form').submit(function() {
     console.log('client side dataaasssss', data);
     $.get('/search?query=' + data.latitude + ', ' + data.longitude )
     .done(function(queryData){
+      eventDisplay.text(JSON.stringify(queryData.events))
       console.log('qqquerryryryryryr datataa', queryData)
       console.log(data.latitude, data.longitude);
       map.panTo({lat: data.latitude, lng: data.longitude});
       var latLng = {lat: data.latitude, lng: data.longitude}
+
       queryData.events.forEach(function(el){
         var latLng = {lat: el.venue.latitude, lng: el.venue.longitude}
         placeMarker(latLng, map, el)
@@ -96,7 +101,7 @@ function placeMarker(latLng, map, eventObj) {
   marker.addListener('click', function(){
     console.log('you clicked me');
     console.log(this.eventInfo)
-    var eventPageLink = '<br><button href="/event">More Info</button>'
+    var eventPageLink = '<br><a href="/event">More Info</a>'
     var contentString = this.eventInfo.artists[0].name + ' AT ' + this.eventInfo.venue.name + eventPageLink
     var infowindow = new google.maps.InfoWindow({
       content: contentString
