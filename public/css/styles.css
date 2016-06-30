@@ -13,13 +13,14 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100%;
-  opacity: 0.8;
-  filter:alpha(opacity=80);
+    /*opacity: 0.8;
+    filter:alpha(opacity=80);*/
 }
 
 .navbar {
-  height: 100px;
+  height: 80px;
   background-color: #F7F0F0;
+  opacity: .6;
 }
 
 .navbar-brand {
@@ -29,6 +30,18 @@ body {
 
 .logo {
   height: 50px;
+}
+
+.jumbotron {
+  background: #F7F0F0;
+  opacity: .7;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+  display: flex;
+  align-items: center;
 }
 
 h1 {
@@ -68,8 +81,8 @@ label {
 }
 
 #map-container {
-  width: 600px;
-  height: 400px;
+  width: 460px;
+  height: 300px;
 }
 
 .padding {
@@ -82,4 +95,5 @@ label {
   width: 100%;
   height: 50px;
   background-color: #F7F0F0;
+  opacity: .6;
 }

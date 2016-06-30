@@ -84,7 +84,7 @@ userRouter.route('/users/:id')
         throw err;
         res.json( {success:false, message:"Your account could not be deleted"} );
       } else {
-        res.json( {success:"", message: "Hope to see you back soon."} );
+        // res.json( {success:"", message: "Hope to see you back soon."} );
         res.redirect('/', {user: user} );
       }
     })
