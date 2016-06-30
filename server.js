@@ -43,11 +43,11 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
 
-socket.on('send chat', function(msg){
-	// if (err) return console.log(err)
-	io.emit('r chat', msg)
-	console.log(msg);
-})
+	socket.on('send-chat', function(msg){
+		// if (err) return console.log(err)
+		io.emit('r chat', msg)
+		console.log(msg);
+	})
 })
 
 // socket.on('send-search', function(search) {
@@ -80,6 +80,8 @@ var port = process.env.PORT || 3000
 // EJS configuration
 app.set('view engine', 'ejs')
 app.use(ejsLayouts)
+
+
 
 // Enabling CORS for events Routes
 app.get('/events/:id', cors(), function(req, res, next) {
@@ -125,6 +127,10 @@ app.get('/search', function(req, res) {
     var events = JSON.parse(response.body)
 		res.json({message: "Stuff coming back from server...", events: events})
 	})
+})
+
+app.get('/chat', function(req, res){
+	res.render('NicksSPA.ejs')
 })
 
 app.post('/geocode', function(req, res){
