@@ -1,6 +1,6 @@
 body {
   font-family: 'Raleway', sans-serif;
-  /*background-color: #F7F0F0;*/
+  background-color: #F7F0F0;
 }
 
 #background {
@@ -17,6 +17,11 @@ body {
   filter:alpha(opacity=80);
 }
 
+.navbar {
+  height: 100px;
+  background-color: #F7F0F0;
+}
+
 .navbar-brand {
   color: #18A999;
   font-weight: 800;
@@ -25,6 +30,7 @@ body {
 .logo {
   height: 50px;
 }
+
 
 h1 {
   color: #18A999;
