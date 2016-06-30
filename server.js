@@ -103,6 +103,9 @@ app.use(function(req,res,next){
 app.use('/', userRoutes)
 // app.use('/events', eventRoutes)
 
+app.get('/event', function(req, res){
+	res.render('event.ejs')
+})
 // move this to events router when it's ready:
 app.get('/search', function(req, res) {
   console.log('queryyyyy', req.query.query);
