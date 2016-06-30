@@ -11,7 +11,7 @@ var
       events: Array
     }
   })
-  evenetSchema = new Schema({
+  eventSchema = new Schema({
     event: {
       artist: String,
       venue: String,
