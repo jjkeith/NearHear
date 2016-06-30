@@ -79,15 +79,13 @@ function placeMarker(latLng, map, eventObj) {
   eventInfo: eventObj
 });
 
-  marker.addListener('mouseover', function(){
-    console.log(this.eventInfo)
-    var eventId = this.eventInfo.id
-    // var event = this.eventInfo
-    var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name; // + '</p><button><a href=/events/' + eventId + '>More Info</a></button>'
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-
+marker.addListener('mouseover', function(){
+  console.log(this.eventInfo)
+  var eventId = this.eventInfo.id
+  var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name; // + '</p><button><a href=/events/' + eventId + '>More Info</a></button>'
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
     infowindow.open(map, marker);
     marker.addListener('mouseout', function(){
       setTimeout(function(){
@@ -96,10 +94,8 @@ function placeMarker(latLng, map, eventObj) {
     })
     marker.addListener('click', function(){
       console.log("clicked button")
-      sessionStorage.setItem('eventID',this.eventInfo.id)
-      sessionStorage.setItem('event', JSON.stringify(this.eventInfo))
-
-
+      sessionStorage.setItem( 'eventID',this.eventInfo.id )
+      sessionStorage.setItem( 'event', JSON.stringify(this.eventInfo) )
       window.location = '/event'
     })
   })
@@ -107,7 +103,7 @@ function placeMarker(latLng, map, eventObj) {
 
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg7qsdMIt6_u3lp0AfjJoz41S2C8fyCRg&callback=initMap"
+<script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyBg7qsdMIt6_u3lp0AfjJoz41S2C8fyCRg&callback=initMap"
  async defer>
 
  </script>
