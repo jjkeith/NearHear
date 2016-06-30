@@ -1,6 +1,6 @@
 body {
   font-family: 'Raleway', sans-serif;
-  background-color: #F7F0F0;
+  background-color: #EDEDED;
 }
 
 #background {
@@ -19,7 +19,7 @@ body {
 
 .navbar {
   height: 100px;
-  background-color: #F7F0F0;
+  background-color: #EDEDED;
 }
 
 .navbar-brand {
@@ -30,7 +30,6 @@ body {
 .logo {
   height: 50px;
 }
-
 
 h1 {
   color: #18A999;

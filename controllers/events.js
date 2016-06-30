@@ -10,23 +10,12 @@ module.exports = {
   show: show
 }
 
-// function index (req, res) {
-//   Event.find({}, function(err, events) {
-//     if (err) throw err;
-//     res.json(events)
-//   })
-// }
-
-
+// Ultimately, isn't this view /users?  -jj
 function searchResults(req, res){
   var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.params.search.lat + req.params.search.lon '&radius=' +req.params.search.radius +'format=json&app_id=WDISM23';
   console.log(req.params.search);
   request(apiUrl, function(err, response){
     if (err) throw err;
-
-    // var events = JSON.parse(response.body)
-    // events[0].datetime
-
     res.json(events)
     res.render('events', {events: events})
   })
