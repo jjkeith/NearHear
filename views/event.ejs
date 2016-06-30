@@ -12,9 +12,10 @@ console.log(event.id);
 console.log(event.datetime);
 console.log(event.ticket_url);
 console.log(event.artists[0]);
+console.log(event.title);
 
-
-sessionStorage.setItem('eventID',this.eventInfo.id)
+$('body').append(event.ticket_url)
+// sessionStorage.setItem('eventID',this.eventInfo.id)
 sessionStorage.setItem('event', JSON.stringify(this.eventInfo))
 
 

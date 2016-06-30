@@ -1,45 +1,21 @@
-<div class="padding"></div>
+<div class="container-fluid">
 
-<form id ="search-form" method="GET">
-  <div class="form-group row">
-    <div class="col-sm-6">
-      <h2>Search for Events</h2>
+  <div class=row>
+    <div class="col-sm-5 col-sm-offset-0">
+      <h2 class = "page-header">Who's playing where?<br>
+      <small>Enter your address below to find shows happening today</small></h2>
     </div>
-  </div>
 
-  <div class="form-group row">
-    <label for="inputAddress" class="col-sm-2 form-control-label">Enter Address</label>
-    <div class="col-sm-4">
-      <input type="text" class="form-control" id="address-input" placeholder="Enter Address" value= '<%= user.local.zipcode %>'>
-    </div>
-  </div>
+      <div class="col-sm-5 col-sm-offset-2">
+        <h2 class = "page-header">Chat with other concert goers<br>
+        <small>Share tips, reviews, make plans, meet up with friends</small></h2>
+      </div>
 
-  <div class="form-group row">
-    <label for="inputRadius" class="col-sm-2 form-control-label">Search Radius</label>
-    <div class="col-sm-4">
-      <input type="number" class="form-control" id="radius-input" placeholder="Enter Search Radius" value= '10'>
-    </div>
-  </div>
+      <div class="chat_div">
 
-  <div class="form-group row">
-    <div class="col-sm-4 col-sm-offset-2">
-      <button type="submit" class="btn btn-primary">Search</button>
-    </div>
-  </div>
 
-</form>
+<!-- Put socket chat here -->
 
-<div class="padding"></div>
-
-<!-- TODO for testing - needs to be moved to events.ejs -->
-<div class="row">
-  <div id="map-container" class="col-sm-6">
-
-  </div>
-</div>
-<div id="events-display">
-
-</div>
 
 <style>
   #messages { max-width: 350px; height: 300px; overflow-y: scroll}
@@ -53,8 +29,6 @@
   #messages li:nth-child(odd) { background: #eee; }
 
 </style>
-</head>
-<body>
 
 <div class="chat-window">
   <ul id="messages"></ul>
@@ -62,25 +36,82 @@
       <input id="m" autocomplete="off" /><button id="send-button">Send</button>
     </form>
 
+
+    </div>
 </div>
-<script src="/socket.io/socket.io.js"></script>
-  <script>
-    var socket = io();
 
-    $('form').submit(function(){
-      socket.emit('send-chat', $('#m').val());
-      $('#m').val('');
-      return false;
-    });
+    <script src="/socket.io/socket.io.js"></script>
+      <script>
+        var socket = io();
 
-    socket.on('r chat', function(msg){
-      console.log(msg);
-      var timestamp = moment(msg.timestamp).format('h:mm:a')
-      $('#messages').append('<li><small>' + timestamp + '</small> ' + msg + '</li>')
-    })
+        $('form').submit(function(){
+          socket.emit('send-chat', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
 
-  </script>
-</body>
+        socket.on('r chat', function(msg){
+          console.log(msg);
+          var timestamp = moment(msg.timestamp).format('h:mm:a')
+          $('#messages').append('<li><small>' + timestamp + '</small> ' + msg + '</li>')
+        })
+
+
+      </script>
+
+<!-- END OF CHAT STUFF -->
+
+  <form id ="search-form" method="GET">
+    <div class="form-group row">
+      <div class="col-sm-2 col-sm-offset-0">
+        <label for="inputAddress" class="form-control-label">Enter Address</label>
+      </div>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" id="address-input" placeholder="Enter Address" value= '<%= user.local.zipcode %>'>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-0 col-sm-offset-0">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+
+  </form>
+
+
+  <div class="padding"></div>
+    <p>Click on a marker for more information about an event</p>
+    <div id="map-container" class="col-sm-8 col-sm-offset-0">
+
+    </div>
+
+<div class="padding"></div>
+
+<div class="saved-shows col-sm-8 col-sm-offset-0">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date and Time</th>
+        <th>Tickets</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>"Skrillex @ Jack Ü @ FVDED in the Park in Surrey, Canada"</td>
+        <td>"Saturday, July 2, 2016 at 7:00PM"</td>
+        <td><a href="http://www.bandsintown.com/event/11680295/buy_tickets?app_id=YOUR_APP_ID&artist=Skrillex&came_from=67"</a>Click here</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><a href=""</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
 <script type="text/javascript">
 // var socket = io();
@@ -89,7 +120,6 @@ $('#search-form').submit(function() {
 
   // socket.emit('send-search', $('#address-input').val());
   var searchAddress = $('#address-input').val()
-  var searchRadius = $('#radius-input').val()
   var eventDisplay = $('#events-display')
 
   $.ajax({
@@ -102,9 +132,6 @@ $('#search-form').submit(function() {
     console.log('client side dataaasssss', data);
     $.get('/search?query=' + data.latitude + ', ' + data.longitude )
     .done(function(queryData){
-      eventDisplay.text(JSON.stringify(queryData.events))
-      console.log('qqquerryryryryryr datataa', queryData)
-      console.log(data.latitude, data.longitude);
       map.panTo({lat: data.latitude, lng: data.longitude});
       var latLng = {lat: data.latitude, lng: data.longitude}
 
@@ -112,13 +139,10 @@ $('#search-form').submit(function() {
         var latLng = {lat: el.venue.latitude, lng: el.venue.longitude}
         placeMarker(latLng, map, el)
       });
-
-})
-})
+    })
+  })
 
   $('#address-input').val('');
-  $('#radius-input').val('');
-
 
   console.log('message sending');
   return false;
@@ -126,8 +150,8 @@ $('#search-form').submit(function() {
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map-container'), {
-    center: {lat: -34.397, lng: 150.644},
-    zoom: 8
+    center: {lat: 34.013, lng: -118.495},
+    zoom: 13
   });
 }
 
@@ -137,49 +161,35 @@ function placeMarker(latLng, map, eventObj) {
     position: latLng,
     map: map,
     eventInfo: eventObj
+})
+
+marker.addListener('mouseover', function(){
+  console.log(this.eventInfo);
+  console.log(this.eventInfo.id);
+  console.log(eventId);
+  console.log(this.eventInfo.datetime);
+  console.log(this.eventInfo.ticket_url);
+  var eventId = this.eventInfo.id
+  var eventTitle = this.eventInfo.title
+  var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><button><a href=/events/' + eventId + '>Add to my Shows</a></button>'
+//right about here is where the URL should be concatenated.
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
   });
-
-  marker.addListener('mouseover', function(){
-    console.log(this.eventInfo)
-    var eventId = this.eventInfo.id
-    var eventPageLink = '<br><button id="'+ eventId + '" class="more-info">More Info</button>'
-    var contentString = this.eventInfo.artists[0].name + ' AT ' + this.eventInfo.venue.name + eventPageLink
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-
     infowindow.open(map, marker);
     marker.addListener('mouseout', function(){
-      // console.log(this.eventInfo)
-      // var eventId = this.eventInfo.id
-      // var eventPageLink = '<br><button id="'+ eventId + '" class="more-info">More Info</button>'
-      // var contentString = this.eventInfo.artists[0].name + ' AT ' + this.eventInfo.venue.name + eventPageLink
-      // var infowindow = new google.maps.InfoWindow({
-      //   content: 'out'
-      // });
       setTimeout(function(){
             infowindow.close(map, marker);
       }, 800)
     })
+    marker.addListener('click', function(){
+      sessionStorage.setItem( 'eventID',this.eventInfo.id )
+      sessionStorage.setItem( 'event', JSON.stringify(this.eventInfo) )
+      window.location = '/event'
+    })
+
   })
 }
-
-
-
-
-
-
-// socket.on('search-coords', function(search) {
-//   // console.log('in index view, search is:', search);
-//   // console.log('search.latitude:', search[0].latitude);
-//   var focusCoords = [search[0].latitude, search[0].longitude];
-//   console.log('in index.html, focusCoords:', focusCoords);
-//   var map;
-//
-// });
-
-
-
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg7qsdMIt6_u3lp0AfjJoz41S2C8fyCRg&callback=initMap"

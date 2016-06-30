@@ -13,19 +13,26 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100%;
-    /*opacity: 0.8;
-    filter:alpha(opacity=80);*/
+  /*opacity: 0.8;
+  filter:alpha(opacity=80);*/
+  z-index: -1;
 }
 
 .navbar {
   height: 80px;
   background-color: #F7F0F0;
-  opacity: .6;
+  /*opacity: .6;*/
+  margin-bottom: 40px;
 }
 
 .navbar-brand {
   color: #18A999;
   font-weight: 800;
+}
+
+form {
+  position: re]relative;
+  z-index: 1;
 }
 
 .logo {
@@ -35,6 +42,14 @@ body {
 .jumbotron {
   background: #F7F0F0;
   opacity: .7;
+}
+.wrapper {
+  background: #F7F0F0;
+  position: sticky;
+  opacity: .7;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 .vertical-center {
@@ -86,11 +101,11 @@ label {
 }
 
 .padding {
-  height: 40px
+  height: 40px;
 }
 
 .footer {
-  position: absolute;
+  position: absolute;;
   bottom: 0;
   width: 100%;
   height: 50px;
