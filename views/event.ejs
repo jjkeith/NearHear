@@ -1,14 +1,19 @@
-<h1>Event Page</h1>
+<h1 class="artist">Event Page</h1>
 <!-- <h2>manipulate the DOM with the data from the ajax call below</h2> -->
+
+
 <script type="text/javascript">
 
-// $.ajax({
-//   url: "Whatever the api event URL is/" + sessionStorage.eventID
-//   method: 'GET',
-//   data: order
-// }).done(function(data) {
-//   var eventName = data.name
-//   var eventDetails = data.details
-// });
+$.ajax({
+  url: "http://www.bandsintown.com/event/" + sessionStorage.eventID + "?app_id=WDISM23/",
+  method: 'GET',
+  contentType: 'application/json',
+  data: JSON.stringify({data: event})
+
+}).done(function(data) {
+  var eventName = data.name;
+  var eventDetails = data.details;
+  console.log(data);
+});
 
 </script>
