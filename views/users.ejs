@@ -79,10 +79,11 @@ $('#search-form').submit(function() {
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map-container'), {
-    center: {lat: -34.397, lng: 150.644},
-    zoom: 8
+    center: {lat: 34.013, lng: -118.495},
+    zoom: 13
   });
 }
+
 
 function placeMarker(latLng, map, eventObj) {
   var marker = new google.maps.Marker({
@@ -112,15 +113,6 @@ function placeMarker(latLng, map, eventObj) {
     })
   })
 }
-
-// socket.on('search-coords', function(search) {
-//   // console.log('in index view, search is:', search);
-//   // console.log('search.latitude:', search[0].latitude);
-//   var focusCoords = [search[0].latitude, search[0].longitude];
-//   console.log('in index.html, focusCoords:', focusCoords);
-//   var map;
-//
-// });
 
 </script>
 
