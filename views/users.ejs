@@ -60,12 +60,6 @@ $('#search-form').submit(function() {
     console.log('client side dataaasssss', data);
     $.get('/search?query=' + data.latitude + ', ' + data.longitude )
     .done(function(queryData){
-      events = text(JSON.stringify(queryData.events));
-      // eventDisplay.html('<h1>' + event.id + '</h1>')
-
-
-      console.log('qqquerryryryryryr datataa', queryData)
-      console.log(data.latitude, data.longitude);
       map.panTo({lat: data.latitude, lng: data.longitude});
       var latLng = {lat: data.latitude, lng: data.longitude}
 
@@ -73,8 +67,8 @@ $('#search-form').submit(function() {
         var latLng = {lat: el.venue.latitude, lng: el.venue.longitude}
         placeMarker(latLng, map, el)
       });
-})
-})
+    })
+  })
 
   $('#address-input').val('');
   $('#radius-input').val('');
@@ -91,53 +85,33 @@ function initMap() {
 }
 
 function placeMarker(latLng, map, eventObj) {
-    // console.log('placemarker:', latLng, map);
-    var marker = new google.maps.Marker({
-    position: latLng,
-    map: map,
-    eventInfo: eventObj
-  });
+  var marker = new google.maps.Marker({
+  position: latLng,
+  map: map,
+  eventInfo: eventObj
+});
 
   marker.addListener('mouseover', function(){
     console.log(this.eventInfo)
     var eventId = this.eventInfo.id
-    var eventPageLink = '<br><button id="'+ eventId + '" class="more-info">More Info</button>'
-    var contentString = this.eventInfo.artists[0].name + ' AT ' + this.eventInfo.venue.name + eventPageLink
+    var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name; // + '</p><button><a href=/events/' + eventId + '>More Info</a></button>'
     var infowindow = new google.maps.InfoWindow({
       content: contentString
     });
-    $('button').on('click', function(){
-      console.log('CLICKKED');
-      // $.ajax({
-      //   url: '/event',
-      //   method: 'GET',
-      //   contentType: 'application/json',
-      //   data: JSON.stringify({data: })
-      // })
-      // .done(function(data){
-      //   console.log(data);
-      // })
-    })
+
     infowindow.open(map, marker);
     marker.addListener('mouseout', function(){
-      // console.log(this.eventInfo)
-      // var eventId = this.eventInfo.id
-      // var eventPageLink = '<br><button id="'+ eventId + '" class="more-info">More Info</button>'
-      // var contentString = this.eventInfo.artists[0].name + ' AT ' + this.eventInfo.venue.name + eventPageLink
-      // var infowindow = new google.maps.InfoWindow({
-      //   content: 'out'
-      // });
       setTimeout(function(){
             infowindow.close(map, marker);
       }, 800)
     })
+    marker.addListener('click', function(){
+      console.log("clicked button")
+      sessionStorage.setItem('eventID',this.eventInfo.id)
+      window.location = '/event'
+    })
   })
 }
-
-
-
-
-
 
 // socket.on('search-coords', function(search) {
 //   // console.log('in index view, search is:', search);
@@ -147,8 +121,6 @@ function placeMarker(latLng, map, eventObj) {
 //   var map;
 //
 // });
-
-
 
 </script>
 

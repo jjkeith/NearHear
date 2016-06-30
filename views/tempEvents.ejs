@@ -1,64 +1,47 @@
-<h2>Search Results</h2>
+<!-- <!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <script type="text/javascript" src="/js/socket.io-1.4.5.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript" src="/js/moment.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <body>
 
-<div class=row>
+    <div class="chat-window">
+      <ul id="messages"></ul>
+        <form action="">
+          <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
 
-  <div class="col-sm-2">
-    <div class="card card-block">
-      <h4 class="card-title">Card title</h4>
-      <ul class="card-text">
-        <li></li>
-        Some quick example text to build on the card title and make up the bulk of the card's content.
-      </ul>
-      <a href="/event/<% event.id %>" class="card-link">View</a>
-    </div>
   </div>
+    <script src="/socket.io/socket.io.js"></script>
+      <script>
+        var socket = io();
 
-<script type="text/javascript">
+        $('form').submit(function(){
+          socket.emit('send chat', $('#m').val());
+          $('#m').val('');
+          console.log('message sending');
+          return false
+        })
 
-$(document).ready(function(){
-   $('.events').focus(function(){
-     var getEvents = function(){
-        var lat = [this comes from somewhere].val();
-        var lon = [this comes from somewhere].val();
-        var radius = [this comes from somewhere].val();
+        socket.on('r chat', function(msg){
+          console.log(msg);
+          var timestamp = moment(msg.timestamp).format('h:mm:a')
+          $('#messages').append('<li><small>' + timestamp + '</small> ' + msg + '</li>')
+        })
 
-        if([whatever the api returns] == ''){
-
-          $('.events').html("<h2 class='message'>No events found(?) I think? I don't get this.</h2>");
-
-        } else {
-
-          $('.events').html("<h2 class='event-listings'>I don't know what's supposed to happen here </h2>");
-
-          $.getJSON('http://api.bandsintown.com/events/search?&location=' + lat + lon + '&radius=' + radius + 'format=json&app_id=WDISM23', function(json) {
-
-            if (json != "[]"){
-
-              //need an iterator
-
-                $('events').html("<h2 class='event-listings'>Here is where I figure out how to list the events. </h2>")
-
-            } else {
-              function() {
-                $('.events').html('<h2 class="No events found.</h2>');
-              });
-            }
-          });
-        }
-        return false;
-}
-
-// Starts of the Bands in Town Search -- Not complete
-app.get('/events/:search', function(req, res){
-  var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.params.search.lat + req.params.search.lon + '&radius=' + req.params.search.radius + 'format=json&app_id=WDISM23';
-  console.log(req.params.search);
-  request(apiUrl, function(err, response){
-    if (err) throw err;
-
-    var events = JSON.parse(response.body)
-    events[0].datetime
-    // res.send('<li>'+ datetime + '</li>')
-    res.json(events)
-    res.render('whateverview', {events: datetime})
-  })
-})
+      </script>
+  </body>
+</html> -->

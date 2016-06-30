@@ -96,6 +96,13 @@ userRouter.get('/logout', function(req, res) {
   res.redirect('/');
 })
 
+userRouter.get('/events/:id', function(req, res) {
+  console.log('req.params.id',req.params.id);
+  var event = req.params.id
+    if (err) throw err;
+    res.json(event)
+})
+
 // Checks if a user is logged in
 function isLoggedIn(req, res, next) {
   console.log("isLoggedIn")
