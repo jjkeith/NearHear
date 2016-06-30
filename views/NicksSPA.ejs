@@ -23,18 +23,17 @@
         <form action="">
           <input id="m" autocomplete="off" /><button>Send</button>
         </form>
-
   </div>
+
     <script src="/socket.io/socket.io.js"></script>
       <script>
         var socket = io();
 
         $('form').submit(function(){
-          socket.emit('send chat', $('#m').val());
+          socket.emit('send-chat', $('#m').val());
           $('#m').val('');
-          console.log('message sending');
-          return false
-        })
+          return false;
+        });
 
         socket.on('r chat', function(msg){
           console.log(msg);
