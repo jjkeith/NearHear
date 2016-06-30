@@ -1,72 +1,47 @@
 <div class="padding"></div>
 
-<div class="col-sm-3">
-  <h4>Welcome, <%= user.local.username %></h4>
-    <img id='profile-image' style="width:150px; height:150px" />
-      <a href="https://signup.wordpress.com/signup/?ref=oauth2&oauth2_redirect=8cc7be1bd5398464de0dd62439d0761a%40https%3A%2F%2Fpublic-api.wordpress.com%2Foauth2%2Fauthorize%2F%3Fclient_id%3D1854%26response_type%3Dcode%26blog_id%3D0%26state%3D99a2088d617f242667d57a1fa4b3709cc63fc9b7064361a3a6c1bb06aad84009%26redirect_uri%3Dhttps%253A%252F%252Fen.gravatar.com%252Fconnect%252F%253Faction%253Drequest_access_token%26jetpack-code%26jetpack-user-id%3D0%26action%3Doauth2-login&wpcom_connect=1">
-      <br><small>Sign Up For Gravatar To Upload a Profile Pic</small></a><br>
-</div>
-
 <form id ="search-form" method="GET">
-  <div class="form-group ">
-    <div class="col-sm-6 col-sm-offset-0">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
       <h2>Search for Events</h2>
-
-
+    </div>
+  </div>
   <div class="form-group row">
-    <label for="inputAddress" class="col-sm-2 col-sm-offset-0 form-control-label">Enter Address</label>
-    <div class="col-sm-8">
+    <div class="col-sm-3 col-sm-offset-2">
+      <label for="inputAddress" class="form-control-label">Enter Address</label>
+    </div>
+    <div class="col-sm-5">
       <input type="text" class="form-control" id="address-input" placeholder="Enter Address" value= '<%= user.local.zipcode %>'>
     </div>
   </div>
-
   <div class="form-group row">
-    <label for="inputRadius" class="col-sm-2 col-sm-offset-0 form-control-label">Search Radius</label>
-    <div class="col-sm-8">
-      <input type="number" class="form-control" id="radius-input" placeholder="Enter Search Radius" value= '10'>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <div class="col-sm-4 col-sm-offset-0">
+    <div class="col-sm-3 col-sm-offset-2">
       <button type="submit" class="btn btn-primary">Search</button>
     </div>
   </div>
-
+</div>
 </form>
 
 <div class="padding"></div>
 
-<!-- TODO for testing - needs to be moved to events.ejs -->
-<div class="row">
-  <div id="map-container" class="col-sm-6 col-sm-offset-00">
+  <div id="map-container" class="col-sm-8 col-sm-offset-2">
 
   </div>
-</div>
-<div id="events-display">
 
-</div>
 
 <script type="text/javascript">
-
-// this code pulls avatar from gravatar and codifys user email address so gravatar can render image
-  $(function () {
-    var userEmail = "<%= user.local.email%>"
-    $('#profile-image').attr('src', 'http://gravatar.com/avatar/' + MD5(userEmail) + '?s=600')
-  })
 
 $('#search-form').submit(function() {
 
   // socket.emit('send-search', $('#address-input').val());
   var searchAddress = $('#address-input').val()
-  var searchRadius = $('#radius-input').val()
   var eventDisplay = $('#events-display')
 
   $.ajax({
     url: '/geocode',
     method: 'POST',
     contentType: 'application/json',
-    data: JSON.stringify({data: searchAddress}, {data: searchRadius})
+    data: JSON.stringify({data: searchAddress})
   })
   .done(function(data){
     console.log('client side dataaasssss', data);
@@ -83,7 +58,6 @@ $('#search-form').submit(function() {
   })
 
   $('#address-input').val('');
-  $('#radius-input').val('');
 
   console.log('message sending');
   return false;
@@ -91,11 +65,11 @@ $('#search-form').submit(function() {
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map-container'), {
+    //General Assembly SM's coordinates
     center: {lat: 34.013, lng: -118.495},
     zoom: 13
   });
 }
-
 
 function placeMarker(latLng, map, eventObj) {
   var marker = new google.maps.Marker({

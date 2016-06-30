@@ -99,9 +99,8 @@ app.use(function(req,res,next){
   next()
 })
 
-// Establish base routes
+// Establish rppt route
 app.use('/', userRoutes)
-// app.use('/events', eventRoutes)
 
 app.get('/event', function(req, res){
 	var apiUrl = 'http://api.bandsintown.com/events/search?&id=' + req.body.data +  'format=json&app_id=WDISM23'
@@ -111,7 +110,9 @@ app.get('/event', function(req, res){
 })
 // move this to events router when it's ready:
 app.get('/search', function(req, res) {
-	var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.query.query +  '&radius=' + req.query.radius + 'format=json&app_id=WDISM23'
+	console.log("req.query.query");
+	console.log(req.query.query);
+	var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.query.query +  '&radius=10format=json&app_id=WDISM23'
 	request(apiUrl, function(err, response){
 		console.log(apiUrl);
     if (err) throw err;
