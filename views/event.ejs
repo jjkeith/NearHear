@@ -3,17 +3,22 @@
 
 
 <script type="text/javascript">
+console.log(sessionStorage.eventID);
+console.log(sessionStorage.event);
 
-$.ajax({
-  url: "http://www.bandsintown.com/event/" + sessionStorage.eventID + "?app_id=WDISM23/",
-  method: 'GET',
-  contentType: 'application/json',
-  data: JSON.stringify({data: event})
-
-}).done(function(data) {
-  var eventName = data.name;
-  var eventDetails = data.details;
-  console.log(data);
-});
+// $.ajax({
+//   // url: "http://www.bandsintown.com/event/" +  "/?app_id=WDISM23",
+//   url: "//api.bandsintown.com/artists/Skrillex/events.json?callback=?&app_id=WDISM23",
+//
+//   method: 'GET'
+//   // contentType: 'application/json',
+//   // or text/plain?
+//   // data: JSON.stringify({data: event})
+//
+// }).done(function(data) {
+//   var eventName = data.name;
+//   var eventDetails = data.details;
+//   console.log(data);
+// });
 
 </script>

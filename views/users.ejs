@@ -82,6 +82,7 @@ function placeMarker(latLng, map, eventObj) {
   marker.addListener('mouseover', function(){
     console.log(this.eventInfo)
     var eventId = this.eventInfo.id
+    // var event = this.eventInfo
     var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name; // + '</p><button><a href=/events/' + eventId + '>More Info</a></button>'
     var infowindow = new google.maps.InfoWindow({
       content: contentString
@@ -96,6 +97,12 @@ function placeMarker(latLng, map, eventObj) {
     marker.addListener('click', function(){
       console.log("clicked button")
       sessionStorage.setItem('eventID',this.eventInfo.id)
+      sessionStorage.setItem('event', JSON.stringify(this.eventInfo))
+
+      // for(field in this.eventInfo) {
+      //     sessionStorage.setItem(field, this.eventInfo[field])
+      // }
+
       window.location = '/event'
     })
   })
