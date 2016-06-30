@@ -104,6 +104,9 @@ app.use('/', userRoutes)
 // app.use('/events', eventRoutes)
 
 app.get('/event', function(req, res){
+	var apiUrl = 'http://api.bandsintown.com/events/search?&id=' + req.body.data +  'format=json&app_id=WDISM23'
+	console.log(apiUrl);
+	console.log(res);
 	res.render('event.ejs')
 })
 // move this to events router when it's ready:

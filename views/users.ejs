@@ -98,17 +98,45 @@ function placeMarker(latLng, map, eventObj) {
     eventInfo: eventObj
   });
 
-  marker.addListener('click', function(){
-    console.log('you clicked me');
+  marker.addListener('mouseover', function(){
     console.log(this.eventInfo)
-    var eventPageLink = '<br><a href="/event">More Info</a>'
+    var eventId = this.eventInfo.id
+    var eventPageLink = '<br><button id="'+ eventId + '" class="more-info">More Info</button>'
     var contentString = this.eventInfo.artists[0].name + ' AT ' + this.eventInfo.venue.name + eventPageLink
     var infowindow = new google.maps.InfoWindow({
       content: contentString
     });
+    $('button').on('click', function(){
+      console.log('CLICKKED');
+      // $.ajax({
+      //   url: '/event',
+      //   method: 'GET',
+      //   contentType: 'application/json',
+      //   data: JSON.stringify({data: })
+      // })
+      // .done(function(data){
+      //   console.log(data);
+      // })
+    })
     infowindow.open(map, marker);
+    marker.addListener('mouseout', function(){
+      // console.log(this.eventInfo)
+      // var eventId = this.eventInfo.id
+      // var eventPageLink = '<br><button id="'+ eventId + '" class="more-info">More Info</button>'
+      // var contentString = this.eventInfo.artists[0].name + ' AT ' + this.eventInfo.venue.name + eventPageLink
+      // var infowindow = new google.maps.InfoWindow({
+      //   content: 'out'
+      // });
+      setTimeout(function(){
+            infowindow.close(map, marker);
+      }, 800)
+    })
   })
 }
+
+
+
+
 
 
 // socket.on('search-coords', function(search) {
