@@ -1,4 +1,22 @@
-<h1 class="artist">Event Page</h1>
+<div id="background">
+  <div class="wrapper">
+
+    <div class="padding"></div>
+    <div class="padding"></div>
+
+  <div class="card card-inverse card-primary text-xs-center">
+    <div class="card card-block">
+      <h3 class="card-title" id="title"><b></b></h3>
+      <p class="card-text" id="city-state"></p>
+      <p class="card-text" id="datetime"></p>
+      <p class="card-text" id="url"></p>
+      <p class="card-text" id="ticket_url"></p>
+    </div>
+  </div>
+  </div>
+</div>
+
+
 
 
 
@@ -7,14 +25,31 @@
 var event = JSON.parse(sessionStorage.getItem('event'))
 
 console.log(event);
-console.log(event.url);
 console.log(event.id);
+console.log(event.url);
 console.log(event.datetime);
 console.log(event.ticket_url);
-console.log(event.artists[0]);
-console.log(event.title);
+console.log(event.artists[0].name);
+console.log(event.artists[0].mbid); //null
+console.log(event.venue.name);
+console.log(event.venue.city);
+console.log(event.venue.region);
 
-$('body').append(event.ticket_url)
+
+$('#title').append(event.artists[0].name + ' at ' + event.venue.name)
+$('#city-state').append(event.venue.city + ', ' + event.venue.region)
+$('#datetime').append(event.datetime)
+$('#url').append('<a href="' + event.url + '">More Info</a> | ')
+$('#url').append('<a href="' + event.ticket_url + '">Get Tickets</a>')
+
+
+
+
+
+
+
+
+
 // sessionStorage.setItem('eventID',this.eventInfo.id)
 sessionStorage.setItem('event', JSON.stringify(this.eventInfo))
 
