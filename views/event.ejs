@@ -1,10 +1,18 @@
 <h1 class="artist">Event Page</h1>
-<!-- <h2>manipulate the DOM with the data from the ajax call below</h2> -->
+
 
 
 <script type="text/javascript">
-console.log(sessionStorage.eventID);
-console.log(sessionStorage.event);
+// var event = sessionStorage.event;
+var event = JSON.parse(sessionStorage.getItem('event'))
+
+console.log(event);
+console.log(event.url);
+
+
+sessionStorage.setItem('eventID',this.eventInfo.id)
+sessionStorage.setItem('event', JSON.stringify(this.eventInfo))
+
 
 // $.ajax({
 //   // url: "http://www.bandsintown.com/event/" +  "/?app_id=WDISM23",

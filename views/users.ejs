@@ -99,9 +99,6 @@ function placeMarker(latLng, map, eventObj) {
       sessionStorage.setItem('eventID',this.eventInfo.id)
       sessionStorage.setItem('event', JSON.stringify(this.eventInfo))
 
-      // for(field in this.eventInfo) {
-      //     sessionStorage.setItem(field, this.eventInfo[field])
-      // }
 
       window.location = '/event'
     })
