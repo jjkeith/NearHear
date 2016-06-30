@@ -1,4 +1,5 @@
-<nav class=" navbar-fixed-top navbar " role = "navigation">
+  <nav class=" navbar-fixed-top" role = "navigation">
+
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -9,7 +10,6 @@
       <!-- I want this to be a bigger font for computer displays, but scale down for mobile. -->
     </div>
 
-    <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
       <ul class="nav navbar-nav navbar-right">
 <% if(isLoggedIn) { %>
   <li><a href="#">Welcome, <%= currentUser.local.username %></a></li>

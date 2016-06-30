@@ -1,61 +1,76 @@
 <div class="container-fluid">
+
   <div class=row>
-    <div class="col-sm-11 col-sm-offset-1">
+    <div class="col-sm-5 col-sm-offset-0">
       <h2 class = "page-header">Who's playing where?<br>
-      <small>Enter your address below to find shows happening today <i>near you.</i></h2>
+      <small>Enter your address below to find shows happening today</small></h2>
     </div>
-  </div>
+
+      <div class="col-sm-5 col-sm-offset-2">
+        <h2 class = "page-header">Chat with other concert goers<br>
+        <small>Share tips, reviews, make plans, meet up with friends</small></h2>
+      </div>
+      <div class="chat_div">
+
+
+<!-- Put socket chat here -->
+
+
+
+
+
+      </div>
+    </div>
 
   <form id ="search-form" method="GET">
     <div class="form-group row">
-      <div class="col-sm-2 col-sm-offset-1">
+      <div class="col-sm-2 col-sm-offset-0">
         <label for="inputAddress" class="form-control-label">Enter Address</label>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <input type="text" class="form-control" id="address-input" placeholder="Enter Address" value= '<%= user.local.zipcode %>'>
       </div>
     </div>
     <div class="form-group row">
-      <div class="col-sm-3 col-sm-offset-1">
+      <div class="col-sm-0 col-sm-offset-0">
         <button type="submit" class="btn btn-primary">Search</button>
       </div>
     </div>
-  </div>
+
   </form>
 
   <div class="padding"></div>
+    <p>Click on a marker for more information about an event</p>
+    <div id="map-container" class="col-sm-8 col-sm-offset-0">
 
-    <div id="map-container" class="col-sm-8 col-sm-offset-1">
-      <p>Click on a marker for more information about an event</p>
     </div>
-</div>
 
-<div class="saved-shows">
+<div class="padding"></div>
+
+<div class="saved-shows col-sm-8 col-sm-offset-0">
   <table class="table">
     <thead>
       <tr>
         <th>Title</th>
         <th>Date and Time</th>
+        <th>Tickets</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>"Skrillex @ Jack Ü @ FVDED in the Park in Surrey, Canada"</td>
         <td>"Saturday, July 2, 2016 at 7:00PM"</td>
-        <td><a href="http://www.bandsintown.com/event/11680295/buy_tickets?app_id=YOUR_APP_ID&artist=Skrillex&came_from=67"</a></td>
+        <td><a href="http://www.bandsintown.com/event/11680295/buy_tickets?app_id=YOUR_APP_ID&artist=Skrillex&came_from=67"</a>Click here</td>
       </tr>
-
-
+      <tr>
+        <td></td>
+        <td></td>
+        <td><a href=""</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-
-<!-- evenetSchema = new Schema({
-  event: {
-    artist: String,
-    venue: String,
-    datetime: String,
-    ticket_url: String
-  }
-}) -->
 
 <script type="text/javascript">
 
@@ -106,9 +121,16 @@ function placeMarker(latLng, map, eventObj) {
 });
 
 marker.addListener('mouseover', function(){
-  console.log(this.eventInfo)
+  console.log(this.eventInfo);
+  console.log(this.eventInfo.id);
+  console.log(eventId);
+  console.log(this.eventInfo.datetime);
+  console.log(this.eventInfo.ticket_url);
   var eventId = this.eventInfo.id
+  var eventTitle = this.eventInfo.title
   var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><button><a href=/events/' + eventId + '>Add to my Shows</a></button>'
+//right about here is where the URL should be concatenated.
+
   var infowindow = new google.maps.InfoWindow({
     content: contentString
   });
@@ -119,8 +141,6 @@ marker.addListener('mouseover', function(){
       }, 800)
     })
     marker.addListener('click', function(){
-      console.log("clicked button")
-
       sessionStorage.setItem( 'eventID',this.eventInfo.id )
       sessionStorage.setItem( 'event', JSON.stringify(this.eventInfo) )
       window.location = '/event'
