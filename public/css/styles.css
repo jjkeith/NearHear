@@ -1,3 +1,4 @@
+/*Page-wide styles*/
 body {
   font-family: 'Raleway', sans-serif;
   background-color: #F7F0F0;
@@ -18,6 +19,17 @@ body {
   z-index: -1;
 }
 
+.wrapper {
+  background: #F7F0F0;
+  position: sticky;
+  opacity: .6;
+  padding: 10px;
+  /*width: 100%;*/
+  /*height: 100%;*/
+  z-index: -1;
+}
+
+/*Navbar styles*/
 .navbar {
   height: 80px;
   background-color: #F7F0F0;
@@ -31,8 +43,8 @@ body {
 }
 
 form {
-  position: relative;
-  z-index: 1;
+  /*position: relative;*/
+  /*z-index: 1;*/
 }
 
 .logo {
@@ -44,15 +56,6 @@ form {
   font-family: 'Raleway', sans-serif;
   color: #484349;
   opacity: .6;
-}
-.wrapper {
-  background: #F7F0F0;
-  position: sticky;
-  opacity: .6;
-  padding: 10px;
-  /*width: 100%;*/
-  /*height: 100%;*/
-  z-index: -1;
 }
 
 h1 {
