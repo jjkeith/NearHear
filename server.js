@@ -161,7 +161,6 @@ app.get('/search', function(req, res) {
 					events[i].image_url = JSON.parse(mbidResponse.body).image_url
 					// events[i].image_url = 'testing 123'
 					console.log(events[i])
-
 				})
 			}
 
