@@ -16,44 +16,15 @@
   </div>
   </div>
 
-
-
-
-
-
 <script type="text/javascript">
 // var event = sessionStorage.event;
 var event = JSON.parse(sessionStorage.getItem('event'))
-
-console.log(event);
-console.log(event.id);
-console.log(event.url);
-console.log(event.datetime);
-console.log(event.ticket_url);
-console.log(event.artists[0]);
-console.log(event.title);
-
-$('body').append(event.ticket_url)
-console.log(event.artists[0].name);
-console.log(event.artists[0].mbid); //null
-console.log(event.venue.name);
-console.log(event.venue.city);
-console.log(event.venue.region);
-
 
 $('#title').append(event.artists[0].name + ' at ' + event.venue.name)
 $('#city-state').append(event.venue.city + ', ' + event.venue.region)
 $('#datetime').append(event.datetime)
 $('#url').append('<a href="' + event.url + '">More Info</a> | ')
 $('#url').append('<a href="' + event.ticket_url + '">Get Tickets</a>')
-
-
-
-
-
-
-
-
 
 // sessionStorage.setItem('eventID',this.eventInfo.id)
 sessionStorage.setItem('event', JSON.stringify(this.eventInfo))

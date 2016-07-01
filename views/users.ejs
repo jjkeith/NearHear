@@ -187,6 +187,7 @@ function placeMarker(latLng, map, eventObj) {
 });
 
 marker.addListener('mouseover', function(){
+
   var eventTitle = this.eventInfo.artists[0].name + " at " + this.eventInfo.venue.name;
   var eventId = this.eventInfo.id;
   var dateTime = this.eventInfo.datetime;
