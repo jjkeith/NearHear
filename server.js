@@ -17,6 +17,7 @@ var
 	passportConfig = require('./config/passport.js'),
 
 	userRoutes = require('./routes/users.js'),
+	Message = require('./models/Message.js')
 	// eventRoutes = require('./routes/events.js'),
 
 	request = require('request'),
@@ -44,9 +45,12 @@ io.on('connection', function(socket){
   });
 
 	socket.on('send-chat', function(msg){
-		// if (err) return console.log(err)
-		io.emit('r chat', msg)
-		console.log(msg);
+		var newMessage = new Message
+      newMessage.body = msg
+      newMessage.save(function(err, message){
+          if (err) return console.log(err)
+          io.emit('r chat', message)
+      })
 	})
 })
 
@@ -109,6 +113,14 @@ app.use(function(req,res,next){
 
 // Establish rppt route
 app.use('/', userRoutes)
+
+
+  app.get('/messages', function(req, res){
+    Message.find({}).sort('date').limit(3).exec(function(err, mess){
+			if (err) return console.log(err)
+			res.json(mess);
+		})
+  })
 
 app.get('/event', function(req, res){
 	var apiUrl = 'http://api.bandsintown.com/events/search?&id=' + req.body.data +  'format=json&app_id=WDISM23'
