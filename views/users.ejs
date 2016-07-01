@@ -40,9 +40,9 @@
 
 
   <style>
-    #messages { max-width: 350px; height: 300px; overflow-y: scroll}
+    #messages { max-width: 500px; height: 300px; overflow-y: scroll}
     #formnamehere { max-width: 500px;}
-    .chat-window { font: 13px Helvetica, Arial; float: right; }
+    .chat-window { font: 13px Helvetica, Arial; float: right; margin: 0 auto; max-width: 450px }
     #chat-form { background: #000; padding: 3px; width: 100%; }
     #m { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
     #send-button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
@@ -77,7 +77,7 @@
             return false;
           });
 
-          socket.on('r chat', function(msg){
+          socket.on('r-chat', function(msg){
             appendMessage(msg)
           })
 

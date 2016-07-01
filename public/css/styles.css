@@ -65,9 +65,11 @@ h2 {
   font-weight: 800;
 }
 
+
 .btn-primary {
   background-color: #18A999;
-  color: #484349
+  color: #484349;
+  margin-left: 15px;
 }
 
 .btn-danger {
