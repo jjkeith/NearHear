@@ -65,7 +65,6 @@ userRouter.route('/users/:id')
   .patch(function (req, res) {
     User.findOne({_id: req.params.id}, function(err, user) {
       if (err) throw err;
-      // console.log("PW: ", req.body.password);
       if(req.body.username) user.local.username = req.body.username
       if(req.body.email) user.local.email = req.body.email
       if(req.body.zipcode) user.local.zipcode = req.body.zipcode
@@ -83,7 +82,6 @@ userRouter.route('/users/:id')
         if(err) throw err;
         req.logout()
         res.redirect('/');
-        // res.json( {success:false, message:"Your account could not be deleted"} )
     })
   })
   // .delete(function(req, res) {
