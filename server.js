@@ -172,7 +172,7 @@ app.get('/search', function(req, res) {
 
 
 app.get('/messages', function(req, res){
-	Message.find({}).sort({timestamp: 'descending'}).limit(3).exec(function(err, mess){
+	Message.find({}).sort({timestamp: 'descending'}).limit(8).exec(function(err, mess){
 		if (err) return console.log(err)
 		res.json(mess.reverse());
 	})
