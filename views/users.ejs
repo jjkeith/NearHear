@@ -4,46 +4,99 @@
     <div class="col-sm-5 col-sm-offset-0">
       <h2 class = "page-header">Who's playing where?<br>
       <small>Enter your address below to find shows happening today</small></h2>
+
+        <form id ="search-form" method="GET">
+          <div class="form-group row">
+            <div class="col-sm-2 col-sm-offset-0">
+              <label for="inputAddress" class="form-control-label">Enter Address</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" id="address-input" placeholder="Enter Address" value= '<%= user.local.zipcode %>'>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-0 col-sm-offset-0">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+          </div>
+
+        </form>
+
+
+        <div class="padding"></div>
+          <p>Click on a marker for more information about an event</p>
+          <div id="map-container" class="col-sm-8 col-sm-offset-0">
+
+          </div>
     </div>
 
       <div class="col-sm-5 col-sm-offset-2">
         <h2 class = "page-header">Chat with other concert goers<br>
         <small>Share tips, reviews, make plans, meet up with friends</small></h2>
+        <div class="chat_div">
+
+
+  <!-- Put socket chat here -->
+
+
+  <style>
+    #messages { max-width: 350px; height: 300px; overflow-y: scroll}
+    #formnamehere { max-width: 500px;}
+    .chat-window { font: 13px Helvetica, Arial; float: right; }
+    #chat-form { background: #000; padding: 3px; width: 100%; }
+    #m { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+    #send-button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+    #messages { list-style-type: none; margin: 0; padding: 0; }
+    #messages li { padding: 5px 10px; }
+    #messages li:nth-child(odd) { background: #eee; }
+
+  </style>
+
+  <div class="chat-window">
+    <ul id="messages"></ul>
+      <form id="chat-form" action="">
+        <input id="m" autocomplete="off" /><button id="send-button">Send</button>
+      </form>
+
+
       </div>
-      <div class="chat_div">
+  </div>
 
+      <script src="/socket.io/socket.io.js"></script>
+        <script>
+          var socket = io();
 
-<!-- Put socket chat here -->
+          function appendMessage(msg){
+            var timestamp = moment(msg.timestamp).format('h:mm:a')
+            $('#messages').append('<li><small>' + timestamp + '</small> ' + msg.body + '</li>')
+          }
 
+          $('chat-form').submit(function(){
+            socket.emit('send-chat', $('#m').val());
+            $('#m').val('');
+            return false;
+          });
 
+          socket.on('r chat', function(msg){
+            appendMessage(msg)
+          })
 
-
-
+          $.ajax({
+            url: '/messages',
+            method: 'GET'
+          })
+          .done(function(messages){
+            messages.forEach(function(m){
+              appendMessage(m)
+            })
+          })
+        </script>
       </div>
-    </div>
 
-  <form id ="search-form" method="GET">
-    <div class="form-group row">
-      <div class="col-sm-2 col-sm-offset-0">
-        <label for="inputAddress" class="form-control-label">Enter Address</label>
-      </div>
-      <div class="col-sm-3">
-        <input type="text" class="form-control" id="address-input" placeholder="Enter Address" value= '<%= user.local.zipcode %>'>
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-sm-0 col-sm-offset-0">
-        <button type="submit" class="btn btn-primary">Search</button>
-      </div>
-    </div>
 
-  </form>
 
-  <div class="padding"></div>
-    <p>Click on a marker for more information about an event</p>
-    <div id="map-container" class="col-sm-8 col-sm-offset-0">
+<!-- END OF CHAT STUFF -->
 
-    </div>
 
 <div class="padding"></div>
 
@@ -71,6 +124,7 @@
     </table>
   </div>
 </div>
+
 
 <script type="text/javascript">
 
@@ -147,7 +201,7 @@ marker.addListener('mouseover', function(){
   var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><a href=' + bookmarkLink + '>Bookmark Event</a>';
   // console.log(contentString);
   // var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><button><a href=/events/' + eventId + '>Add to my Shows</a></button>'
-//right about here is where the URL should be concatenated.
+  //right about here is where the URL should be concatenated.
 
   var infowindow = new google.maps.InfoWindow({
     content: contentString
@@ -156,7 +210,7 @@ marker.addListener('mouseover', function(){
     marker.addListener('mouseout', function(){
       setTimeout(function() {
         infowindow.close(map, marker);
-      }, 1200)
+      }, 800)
     })
     marker.addListener('click', function(){
       sessionStorage.setItem( 'eventID',this.eventInfo.id )
@@ -168,7 +222,7 @@ marker.addListener('mouseover', function(){
 
 </script>
 
-<script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyBg7qsdMIt6_u3lp0AfjJoz41S2C8fyCRg&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg7qsdMIt6_u3lp0AfjJoz41S2C8fyCRg&callback=initMap"
  async defer>
 
  </script>

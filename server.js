@@ -17,6 +17,7 @@ var
 	passportConfig = require('./config/passport.js'),
 
 	userRoutes = require('./routes/users.js'),
+	Message = require('./models/Message.js')
 	// eventRoutes = require('./routes/events.js'),
 
 	request = require('request'),
@@ -43,11 +44,14 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
 
-socket.on('send chat', function(msg){
-	// if (err) return console.log(err)
-	io.emit('r chat', msg)
-	console.log(msg);
-})
+	socket.on('send-chat', function(msg){
+		var newMessage = new Message
+      newMessage.body = msg
+      newMessage.save(function(err, message){
+          if (err) return console.log(err)
+          io.emit('r chat', message)
+      })
+	})
 })
 
 // socket.on('send-search', function(search) {
@@ -81,6 +85,8 @@ var port = process.env.PORT || 3000
 app.set('view engine', 'ejs')
 app.use(ejsLayouts)
 
+
+
 // Enabling CORS for events Routes
 app.get('/events/:id', cors(), function(req, res, next) {
   res.json( {msg: 'This is CORS-enabled for all origins!'} );
@@ -108,6 +114,14 @@ app.use(function(req,res,next){
 // Establish rppt route
 app.use('/', userRoutes)
 
+
+  app.get('/messages', function(req, res){
+    Message.find({}).sort('date').limit(3).exec(function(err, mess){
+			if (err) return console.log(err)
+			res.json(mess);
+		})
+  })
+
 app.get('/event', function(req, res){
 	var apiUrl = 'http://api.bandsintown.com/events/search?&id=' + req.body.data +  'format=json&app_id=WDISM23'
 	console.log(apiUrl);
@@ -125,6 +139,10 @@ app.get('/search', function(req, res) {
     var events = JSON.parse(response.body)
 		res.json({message: "Stuff coming back from server...", events: events})
 	})
+})
+
+app.get('/chat', function(req, res){
+	res.render('NicksSPA.ejs')
 })
 
 app.post('/geocode', function(req, res){
