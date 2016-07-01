@@ -2,7 +2,7 @@
 
 ![](public/favicon.ico)
 
-[https://obscure-harbor-18966.herokuapp.com/](click here)
+[https://nearhear.herokuapp.com](click here)
 
 ### Contributors
 JJ Keith | Contact: jj@jjkeith.net [GitHub](https://github.com/jjkeith)
@@ -15,7 +15,8 @@ Susan Rotondo | Contact: susanrotondo@gmail.com [GitHub](https://github.com/susa
 
 Near Hear connects users with bands playing by location using a convenient map interface.
 
-* Each event has a live comment stream so users can find out what’s going on before they leave the house.* When creating an account, users can set their default zip code and search events by any address.
+* Each event has a live comment stream so users can find out what’s going on before they leave the house.
+* When creating an account, users can set their default zip code and search events by any address.
 
 ### Technologies Used
 
