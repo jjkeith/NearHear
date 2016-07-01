@@ -52,3 +52,9 @@ Color palette picker: [cooler](https://coolors.co/app/484349-f7f0f0-8af3ff-18a99
 ![](public/wireframes/p3-search-results-v2.png)
 
 ### Future Implementations
+
+* Add another API to broaded the scope of searchable events.
+* Edit and delete items on the saved events list.
+* Add artist pictures on event detail pages.
+
+
