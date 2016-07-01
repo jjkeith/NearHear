@@ -105,16 +105,21 @@ userRouter.get('/events/:id', function(req, res) {
 
 // Bookmark event to user
 userRouter.get('/users/:id/add-event', function(req, res) {
+  console.log('link sent to /users/:id/add-event');
+  console.log('req', req);
   User.findById(req.params.id, function(err, user) {
     if(err) console.log(err);
-    user.event.push({
+    console.log('User.local.eventBk:', user.local.eventBk);
+    console.log('req.query', req.query)
+    user.local.eventBk.push({
       title: req.query.title,
-      datetime: req.query.date,
-      ticket_url: req.query.url
+      datetime: req.query.datetime,
+      ticket_url: req.query.ticket_url
     });
     user.save(function(err, user) {
+      console.log('req.user._id', user._id)
       if(err) return console.log(err)
-      res.redirect('/users/' + req.user._id);
+      res.redirect('/users/' + user._id);
     });
   });
 });

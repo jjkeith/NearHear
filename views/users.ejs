@@ -74,6 +74,9 @@
 
 <script type="text/javascript">
 
+// to be used in href request to bookmark event to user
+var userId = <%- JSON.stringify(user._id) %>;
+
 $('#search-form').submit(function() {
 
   var searchAddress = $('#address-input').val()
@@ -127,8 +130,23 @@ marker.addListener('mouseover', function(){
   console.log(this.eventInfo.datetime);
   console.log(this.eventInfo.ticket_url);
   var eventId = this.eventInfo.id
-  var eventTitle = this.eventInfo.title
-  var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><button><a href=/events/' + eventId + '>Add to my Shows</a></button>'
+  // console.log('title:', this.eventInfo.artists[0].name);
+  function fixedEncodeURIComponent (str) {
+    return encodeURIComponent(str).replace(/[']/g, function(c) {
+      return '%' + c.charCodeAt(0).toString(16);
+    });
+  }
+  var eventTitle = fixedEncodeURIComponent(this.eventInfo.artists[0].name);
+  console.log('eventTitle:', eventTitle)
+  // var eventTitle = this.eventInfo.artists[0].name;
+  var dateTime = this.eventInfo.datetime;
+  var ticketURL = this.eventInfo.ticket_url;
+  var bookmarkLink = '/users/' + userId  + '/add-event/?title='  + eventTitle +  '&datetime=' + dateTime + '&ticket_url=' + ticketURL
+  console.log(bookmarkLink);
+  //userId variable defined at top of script
+  var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><a href=' + bookmarkLink + '>Bookmark Event</a>';
+  // console.log(contentString);
+  // var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><button><a href=/events/' + eventId + '>Add to my Shows</a></button>'
 //right about here is where the URL should be concatenated.
 
   var infowindow = new google.maps.InfoWindow({
@@ -138,7 +156,7 @@ marker.addListener('mouseover', function(){
     marker.addListener('mouseout', function(){
       setTimeout(function() {
         infowindow.close(map, marker);
-      }, 800)
+      }, 1200)
     })
     marker.addListener('click', function(){
       sessionStorage.setItem( 'eventID',this.eventInfo.id )

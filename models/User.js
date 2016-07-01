@@ -2,22 +2,21 @@ var
   mongoose = require('mongoose'),
   bcrypt = require('bcrypt-nodejs'),
   Schema = mongoose.Schema,
+  eventBkSchema = new Schema({
+      title: String,
+      datetime: String,
+      ticket_url: String
+  }),
   userSchema = new Schema({
     local: {
       username: String,
       zipcode: Number,
       email: String,
       password: String,
-      events: Array
+      eventBk: [eventBkSchema]
     }
   })
-  eventSchema = new Schema({
-    event: {
-      title: String,
-      datetime: String,
-      ticket_url: String
-    }
-  })
+
 
 // the function run when the user is created.
 // 8 is the number of times the data is encrypted.
