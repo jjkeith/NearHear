@@ -62,40 +62,38 @@
       </div>
   </div>
 
-      <script src="/socket.io/socket.io.js"></script>
-        <script>
-          var socket = io();
+<!-- Chat functionality -->
+<script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
 
-          function appendMessage(msg){
-            var timestamp = moment(msg.timestamp).format('h:mm:a')
-            $('#messages').append('<li><small>' + timestamp + '</small> ' + msg.body + '</li>')
-          }
+    function appendMessage(msg){
+      var timestamp = moment(msg.timestamp).format('h:mm:a')
+      $('#messages').append('<li><small>' + timestamp + '</small> ' + msg.body + '</li>')
+    }
 
-          $('form').submit(function(){
-            socket.emit('send-chat', $('#m').val());
-            $('#m').val('');
-            return false;
-          });
+    $('form').submit(function(){
+      socket.emit('send-chat', $('#m').val());
+      $('#m').val('');
+      return false;
+    });
 
-          socket.on('r chat', function(msg){
-            appendMessage(msg)
-          })
+    socket.on('r chat', function(msg){
+      appendMessage(msg)
+    })
 
-          $.ajax({
-            url: '/messages',
-            method: 'GET'
-          })
-          .done(function(messages){
-            messages.forEach(function(m){
-              appendMessage(m)
-            })
-          })
-        </script>
-      </div>
-
-
-
-<!-- END OF CHAT STUFF -->
+    $.ajax({
+      url: '/messages',
+      method: 'GET'
+    })
+    .done(function(messages){
+      messages.forEach(function(m){
+        appendMessage(m)
+      })
+    })
+  </script>
+</div>
+<!-- End of chat code -->
 
 
 <div class="padding"></div>
@@ -166,7 +164,7 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map-container'), {
     //General Assembly SM's coordinates
     center: {lat: 34.013, lng: -118.495},
-    zoom: 13
+    zoom: 12
   });
 }
 
@@ -178,14 +176,9 @@ function placeMarker(latLng, map, eventObj) {
 });
 
 marker.addListener('mouseover', function(){
-  console.log(this.eventInfo);
-  console.log(this.eventInfo.id);
-  console.log(eventId);
-  console.log(this.eventInfo.datetime);
-  console.log(this.eventInfo.ticket_url);
-  var eventId = this.eventInfo.id
-  // console.log('title:', this.eventInfo.artists[0].name);
+
   var eventTitle = this.eventInfo.artists[0].name + " at " + this.eventInfo.venue.name;
+  var eventId = this.eventInfo.id;
   var dateTime = this.eventInfo.datetime;
   var ticketURL = this.eventInfo.ticket_url;
   var bookmarkLink = '/users/' + userId + '/add-event/?title=' + eventTitle + '&datetime=' + dateTime+ '&ticket_url=' + ticketURL
