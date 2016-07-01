@@ -71,7 +71,7 @@
             $('#messages').append('<li><small>' + timestamp + '</small> ' + msg.body + '</li>')
           }
 
-          $('form').submit(function(){
+          $('chat-form').submit(function(){
             socket.emit('send-chat', $('#m').val());
             $('#m').val('');
             return false;

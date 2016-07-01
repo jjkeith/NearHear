@@ -116,9 +116,9 @@ app.use('/', userRoutes)
 
 
   app.get('/messages', function(req, res){
-    Message.find({}).sort('date').limit(3).exec(function(err, mess){
+    Message.find({}).sort({timestamp: 'descending'}).limit(3).exec(function(err, mess){
 			if (err) return console.log(err)
-			res.json(mess);
+			res.json(mess.reverse());
 		})
   })
 
