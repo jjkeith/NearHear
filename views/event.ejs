@@ -1,9 +1,24 @@
+<style media="screen">
+#map-event {
+  height: 200px;
+  width: 200px;
+}
+</style>
+
 <div id="background"></div>
 
 <div class="padding"></div>
 <div class="padding"></div>
 <div class="padding"></div>
 
+<div class="row">
+  <div class="col-sm-4">
+    <div id="map-event">
+
+    </div>
+
+  </div>
+  <div class="col-sm-4">
 
   <div class="card card-primary text-xs-center">
     <div class="card card-block">
@@ -15,34 +30,58 @@
     </div>
   </div>
   </div>
-
+  </div>
+</div>
 <script type="text/javascript">
-// var event = sessionStorage.event;
+
+//Create variable for the event object
 var event = JSON.parse(sessionStorage.getItem('event'))
 
+//Append the DOM with information from the event object
+
 $('#title').append(event.artists[0].name + ' at ' + event.venue.name)
-$('#city-state').append(event.venue.city + ', ' + event.venue.region)
-$('#datetime').append(event.datetime)
+
+if (event.venue.city == '') {
+  $('#city-state').append("No location data provided")
+} else {
+    $('#city-state').append(event.venue.city + ', ' + event.venue.region)
+}
+if (event.datetime == '') {
+  $('#datetime').append("No time and date info provided")
+} else {
+$('#datetime').append(moment(event.datetime).format('MMMM Do YYYY, h:mm a') )
+}
+
 $('#url').append('<a href="' + event.url + '">More Info</a> | ')
 $('#url').append('<a href="' + event.ticket_url + '">Get Tickets</a>')
 
-// sessionStorage.setItem('eventID',this.eventInfo.id)
+if (event.artist[0].mbid !== null) {
+  var imageJson = 'http://api.bandsintown.com/artists/mbid_'+ req.body.data + '?format=json&api_version=2.0&app_id=YOUR_APP_ID'
+}
+//artist.image_url
+
+
+//Store the event in session storage.
 sessionStorage.setItem('event', JSON.stringify(this.eventInfo))
 
+function initMap() {
+  var myLatLng = {lat: event.venue.latitude, lng: event.venue.longitude};
 
-// $.ajax({
-//   // url: "http://www.bandsintown.com/event/" +  "/?app_id=WDISM23",
-//   url: "//api.bandsintown.com/artists/Skrillex/events.json?callback=?&app_id=WDISM23",
-//
-//   method: 'GET'
-//   // contentType: 'application/json',
-//   // or text/plain?
-//   // data: JSON.stringify({data: event})
-//
-// }).done(function(data) {
-//   var eventName = data.name;
-//   var eventDetails = data.details;
-//   console.log(data);
-// });
+  var map = new google.maps.Map(document.getElementById('map-event'), {
+    zoom: 4,
+    center: myLatLng
+  });
+
+  var marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+    title: event.venue.name
+  });
+}
 
 </script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg7qsdMIt6_u3lp0AfjJoz41S2C8fyCRg&callback=initMap"
+ async defer>
+
+ </script>
