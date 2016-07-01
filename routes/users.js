@@ -103,6 +103,27 @@ userRouter.get('/events/:id', function(req, res) {
     res.json(event)
 })
 
+// Bookmark event to user
+userRouter.get('/users/:id/add-event', function(req, res) {
+  console.log('link sent to /users/:id/add-event');
+  console.log('req', req);
+  User.findById(req.params.id, function(err, user) {
+    if(err) console.log(err);
+    console.log('User.local.eventBk:', user.local.eventBk);
+    console.log('req.query', req.query)
+    user.local.eventBk.push({
+      title: req.query.title,
+      datetime: req.query.datetime,
+      ticket_url: req.query.ticket_url
+    });
+    user.save(function(err, user) {
+      console.log('req.user._id', user._id)
+      if(err) return console.log(err)
+      res.redirect('/users/' + user._id);
+    });
+  });
+});
+
 // Checks if a user is logged in
 function isLoggedIn(req, res, next) {
   console.log("isLoggedIn")

@@ -93,9 +93,18 @@
         </script>
       </div>
 
-
-
-<!-- END OF CHAT STUFF -->
+    <!-- $.ajax({
+      url: '/messages',
+      method: 'GET'
+    })
+    .done(function(messages){
+      messages.forEach(function(m){
+        appendMessage(m)
+      })
+    })
+  </script> -->
+</div>
+<!-- End of chat code -->
 
 
 <div class="padding"></div>
@@ -166,7 +175,7 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map-container'), {
     //General Assembly SM's coordinates
     center: {lat: 34.013, lng: -118.495},
-    zoom: 13
+    zoom: 12
   });
 }
 
@@ -178,23 +187,18 @@ function placeMarker(latLng, map, eventObj) {
 });
 
 marker.addListener('mouseover', function(){
-  console.log(this.eventInfo);
-  console.log(this.eventInfo.id);
-  console.log(eventId);
-  console.log(this.eventInfo.datetime);
-  console.log(this.eventInfo.ticket_url);
-  var eventId = this.eventInfo.id
-  // console.log('title:', this.eventInfo.artists[0].name);
+
   var eventTitle = this.eventInfo.artists[0].name + " at " + this.eventInfo.venue.name;
+  var eventId = this.eventInfo.id;
   var dateTime = this.eventInfo.datetime;
   var ticketURL = this.eventInfo.ticket_url;
-  var bookmarkLink = '/users/' + userId + '/add-event/?title=' + eventTitle + '&datetime=' + dateTime+ '&ticket_url=' + ticketURL
-  // console.log(bookmarkLink);
+  var bookmarkLink = '/users/' + userId  + '/add-event/?title='  + eventTitle +  '&datetime=' + dateTime + '&ticket_url=' + ticketURL
+  console.log(bookmarkLink);
   //userId variable defined at top of script
-  // var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><a href=' + bookmarkLink + '>Bookmark Event</a>';
+  var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><a href=' + bookmarkLink + '>Bookmark Event</a>';
   // console.log(contentString);
-  var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><button><a href=/events/' + eventId + '>Add to my Shows</a></button>'
-//right about here is where the URL should be concatenated.
+  // var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><button><a href=/events/' + eventId + '>Add to my Shows</a></button>'
+  //right about here is where the URL should be concatenated.
 
   var infowindow = new google.maps.InfoWindow({
     content: contentString
