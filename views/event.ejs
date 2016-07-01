@@ -30,6 +30,10 @@ console.log(event.id);
 console.log(event.url);
 console.log(event.datetime);
 console.log(event.ticket_url);
+console.log(event.artists[0]);
+console.log(event.title);
+
+$('body').append(event.ticket_url)
 console.log(event.artists[0].name);
 console.log(event.artists[0].mbid); //null
 console.log(event.venue.name);
