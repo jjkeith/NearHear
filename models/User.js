@@ -32,7 +32,6 @@ userSchema.methods.validPassword = function(password){
 }
 
 userSchema.pre('save', function(next) {
-  // if(this.local.password) this.password = this.generateHash(this.password)
   next()
 })
 

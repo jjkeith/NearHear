@@ -12,21 +12,30 @@ var
 	session = require('express-session'),
 	favicon = require('serve-favicon'),
 	cors = require('cors'),
+	request = require('request'),
 
+	// formatting of the datetime string returned from the API
+	moment = require('moment'),
+
+
+	// Secure log-ins and session management
 	passport = require('passport'),
 	passportConfig = require('./config/passport.js'),
 
 	userRoutes = require('./routes/users.js'),
 	Message = require('./models/Message.js')
-	// eventRoutes = require('./routes/events.js'),
 
-	request = require('request'),
+	// Allows for secure event variables
 	dotenv = require('dotenv').load({silent: true}),
 	http = require('http').Server(app),
+
+	// Drives the chat function
 	io = require('socket.io')(http),
 
+	// Required for the Google Maps API
 	NodeGeocoder = require('node-geocoder'),
 
+	// API that provides concert data
 	bandsintown = require('bandsintown')('WDISM23')
 
 
