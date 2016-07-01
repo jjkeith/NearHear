@@ -9,8 +9,6 @@
       <h1 class="col-sm-11 col-sm-offset-1">Edit Profile</h1>
     </div>
 
-
-
 <form action="/users/<%= user._id %>" method="POST">
   <input type="hidden" name="_method" value="PATCH" />
   <div class="form-group row">
@@ -44,23 +42,26 @@
     </div>
 </div>
   <div class="row">
-    <div class="col-sm-1 col-sm-offset-0">
+    <div class="padding"></div>
+    <div class="col-sm-2 col-sm-offset-1">
       <button id="update-user" class="btn btn-primary" type="submit">Update Profile</button>
     </div>
-  </div>
+
 </form>
 
 <div class="padding"></div>
+<!-- <div class="col-sm-3 col-sm-offset-3"> -->
 
-<form action="/users/<%= user._id %>" method="POST">
-  <div class="col-sm-1 col-sm-offset-0">
+  <form action="/users/<%= user._id %>" method="POST">
     <input type="hidden" name="_method" value="DELETE" />
-      <div class="padding"></div>
-      <div class="padding"></div>
-      <div class="col-sm-1 col-sm-offset-0 delete-profile">
-        <button type="delete-user" class="btn btn-danger" type="submit">Delete Profile</button>
-      </div>
-  </div>
-</form>
+
+        <div class="padding"></div>
+        <div class="col-sm-1 col-sm-offset-8 delete-profile">
+          <button type="delete-user" class="btn btn-sm btn-danger" type="submit">Delete Profile</button>
+        </div>
+    </div>
+  </form>
+</div>
+</div>
 </div>
 </div>
