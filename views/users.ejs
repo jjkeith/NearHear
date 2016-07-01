@@ -191,6 +191,7 @@ marker.addListener('mouseover', function(){
 
   // var eventTitle = this.eventInfo.artists[0].name + " at " + this.eventInfo.venue.name;
   var eventId = this.eventInfo.id;
+  console.log(this.eventInfo)
   // need to pass the eventTitle string through fixedEncodeURIComponent function to get a browser-readable URI (event name without spaces or apostrophes)
   function fixedEncodeURIComponent (str) {
     return encodeURIComponent(str).replace(/[']/g, function(c) {
@@ -222,6 +223,7 @@ marker.addListener('mouseover', function(){
       sessionStorage.setItem( 'eventID',this.eventInfo.id )
       sessionStorage.setItem( 'event', JSON.stringify(this.eventInfo) )
       window.location = '/event'
+      console.log(this.eventInfo)
     })
   })
 }

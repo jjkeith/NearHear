@@ -144,10 +144,35 @@ app.get('/search', function(req, res) {
 	console.log(req.query.query);
 	var apiUrl = 'http://api.bandsintown.com/events/search?&location=' + req.query.query +  '&radius=10format=json&app_id=WDISM23'
 	request(apiUrl, function(err, response){
-		console.log(apiUrl);
+		// console.log(response.body);
     if (err) throw err;
-    var events = JSON.parse(response.body)
-		res.json({message: "Stuff coming back from server...", events: events})
+		var events = []
+		var responseEvents = JSON.parse(response.body)
+		// responseEvents.forEach(function(event){
+		// 		event.image_url = 'TESTING 123'
+		// })
+		responseEvents.forEach(function(event, i) {
+
+			events.push(Object.assign({}, event))
+			if(events[i].artists[0].mbid) {
+				request('http://api.bandsintown.com/artists/mbid_'+ events[i].artists[0].mbid + '?format=json&api_version=2.0&app_id=WDISM23', function(err, mbidResponse) {
+					if (err) throw err
+
+					events[i].image_url = JSON.parse(mbidResponse.body).image_url
+					// events[i].image_url = 'testing 123'
+					console.log(events[i])
+
+				})
+			}
+
+			if(i == (responseEvents.length - 1)) {
+				res.json({message: "Stuff coming back from server...", events: events})
+			}
+		})
+		// console.log(responseEvents)
+		// res.json({message: "Stuff coming back from server...", events: responseEvents})
+
+
 	})
 })
 
