@@ -188,8 +188,16 @@ function placeMarker(latLng, map, eventObj) {
 
 marker.addListener('mouseover', function(){
 
-  var eventTitle = this.eventInfo.artists[0].name + " at " + this.eventInfo.venue.name;
+  // var eventTitle = this.eventInfo.artists[0].name + " at " + this.eventInfo.venue.name;
   var eventId = this.eventInfo.id;
+  // need to pass the eventTitle string through fixedEncodeURIComponent function to get a browser-readable URI (event name without spaces or apostrophes)
+  function fixedEncodeURIComponent (str) {
+    return encodeURIComponent(str).replace(/[']/g, function(c) {
+      return '%' + c.charCodeAt(0).toString(16);
+    });
+  }
+  var eventTitle = fixedEncodeURIComponent(this.eventInfo.artists[0].name + " at " + this.eventInfo.venue.name);
+  console.log('eventTitle:', eventTitle)
   var dateTime = this.eventInfo.datetime;
   var ticketURL = this.eventInfo.ticket_url;
   var bookmarkLink = '/users/' + userId  + '/add-event/?title='  + eventTitle +  '&datetime=' + dateTime + '&ticket_url=' + ticketURL
@@ -207,7 +215,7 @@ marker.addListener('mouseover', function(){
     marker.addListener('mouseout', function(){
       setTimeout(function() {
         infowindow.close(map, marker);
-      }, 800)
+      }, 1200)
     })
     marker.addListener('click', function(){
       sessionStorage.setItem( 'eventID',this.eventInfo.id )
