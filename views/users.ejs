@@ -93,7 +93,7 @@
         </script>
       </div>
 
-    $.ajax({
+    <!-- $.ajax({
       url: '/messages',
       method: 'GET'
     })
@@ -102,7 +102,7 @@
         appendMessage(m)
       })
     })
-  </script>
+  </script> -->
 </div>
 <!-- End of chat code -->
 
@@ -187,8 +187,6 @@ function placeMarker(latLng, map, eventObj) {
 });
 
 marker.addListener('mouseover', function(){
-<<<<<<< HEAD
-
   var eventTitle = this.eventInfo.artists[0].name + " at " + this.eventInfo.venue.name;
   var eventId = this.eventInfo.id;
   var dateTime = this.eventInfo.datetime;
