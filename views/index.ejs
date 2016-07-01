@@ -6,6 +6,10 @@
     <div class="container">
       <center><h1><b>Near Hear</b><br>
       <small>Need plans? Enter your zipcode and find out what bands are playing in your neighborhood</small></h1>
+
+      <% if (isLoggedIn) { %>
+        <% } else { %>
       <button class="btn-lg btn-primary left" id="login"><a href="/login">Log In</a></button><button class="btn-lg btn-primary right" id="signin"><a href="/signup">Sign Up</button>
+        <% } %>
     </div>
   </div>

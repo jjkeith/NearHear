@@ -68,7 +68,7 @@ userRouter.route('/users/:id')
       // console.log("PW: ", req.body.password);
       if(req.body.username) user.local.username = req.body.username
       if(req.body.email) user.local.email = req.body.email
-      if(req.body.username) user.local.username = req.body.username
+      if(req.body.zipcode) user.local.zipcode = req.body.zipcode
       if (req.body.password) {
         user.local.password = user.generateHash(req.body.password)
       }
@@ -79,16 +79,20 @@ userRouter.route('/users/:id')
     })
   })
   .delete(function (req, res) {
-    User.findOneAndRemove({_id: req.params.id}, {local: req.body}, function(err, user){
-      if(err){
-        throw err;
-        res.json( {success:false, message:"Your account could not be deleted"} );
-      } else {
-        // res.json( {success:"", message: "Hope to see you back soon."} );
-        res.redirect('/', {user: user} );
-      }
+    User.findOneAndRemove( {_id: req.params.id}, function(err){
+        if(err) throw err;
+        req.logout()
+        res.redirect('/');
+        // res.json( {success:false, message:"Your account could not be deleted"} )
     })
   })
+  // .delete(function(req, res) {
+  //   User.findOne( {_id: req.params.id}, {local: req.body},
+  //   function(err, user) {
+  //     user.logout()
+  //
+  //   })
+  // })
 
 // Run the logout function
 userRouter.get('/logout', function(req, res) {

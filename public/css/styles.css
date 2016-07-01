@@ -22,7 +22,7 @@ body {
 .wrapper {
   background: #F7F0F0;
   position: sticky;
-  opacity: .6;
+  opacity: .7;
   padding: 10px;
   /*width: 100%;*/
   /*height: 100%;*/
@@ -34,7 +34,7 @@ body {
   height: 80px;
   background-color: #F7F0F0;
   margin-bottom: 40px;
-  opacity: .6 ;
+  opacity: .8 ;
   border-color: transparent;
 }
 
@@ -42,15 +42,11 @@ body {
   color: #18A999;
 }
 
-form {
-  /*position: relative;*/
-  /*z-index: 1;*/
-}
-
 .logo {
   height: 50px;
 }
 
+/*Index style*/
 .jumbotron {
   background: #F7F0F0;
   font-family: 'Raleway', sans-serif;
@@ -58,6 +54,7 @@ form {
   opacity: .6;
 }
 
+/*Text Styling*/
 h1 {
   color: #18A999;
   font-weight: 800;
@@ -68,36 +65,38 @@ h2 {
   font-weight: 800;
 }
 
-
-.btn-primary {
-  background-color: #18A999;
-  color: #484349;
-  margin-left: 15px;
-}
-
-.btn-danger {
-  color: #484349
-}
-
-.card-primary {
-  background-color: #F7F0F0;
-  color: #484349;
-  padding: 20px;
-  width: 40%;
-  opacity: .8;
-}
-
-.btn:hover {
-  background-color: #8AF3FF;
-  color: #484349
-}
-
 a {
   color: #484349;
 }
 
 a:hover {
   text-decoration: none;
+}
+
+
+/*Button Styles*/
+btn {
+  color: #484349;
+  border: #484349;
+}
+
+.btn-primary {
+  border: #18A999;
+  background-color: #18A999;
+  margin-left: 15px;
+}
+
+.btn:hover {
+  opacity: .5 ;
+}
+
+/*Card Styles*/
+.card-primary {
+  background-color: #F7F0F0;
+  color: #484349;
+  padding: 20px;
+  width: 40%;
+  opacity: .9;
 }
 
 label {
@@ -110,6 +109,7 @@ label {
   height: 300px;
 }
 
+/*Helper Classes*/
 .padding {
   height: 40px;
 }
@@ -120,13 +120,4 @@ label {
 
 .left {
   float: left;
-}
-
-.footer {
-  position: absolute;;
-  bottom: 0;
-  width: 100%;
-  height: 50px;
-  background-color: #F7F0F0;
-  opacity: .6;
 }
