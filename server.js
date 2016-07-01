@@ -128,6 +128,7 @@ app.get('/event', function(req, res){
 	console.log(res);
 	res.render('event.ejs')
 })
+// send geocoded address data to bandsintown to get area-specific events
 // move this to events router when it's ready:
 app.get('/search', function(req, res) {
 	console.log("req.query.query");
@@ -145,6 +146,7 @@ app.get('/chat', function(req, res){
 	res.render('NicksSPA.ejs')
 })
 
+// create geocoder object from address input on '/users/:id' view
 app.post('/geocode', function(req, res){
 	var address = req.body.data
 	// console.log('GEOOOOCODEEE:', address);

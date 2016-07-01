@@ -147,6 +147,8 @@ $('#search-form').submit(function() {
   var searchAddress = $('#address-input').val()
   var eventDisplay = $('#events-display')
 
+  // passes address input value to NodeGeocoder in '/geocode' post request
+  // the returned data is the geocoded address object
   $.ajax({
     url: '/geocode',
     method: 'POST',
@@ -155,11 +157,13 @@ $('#search-form').submit(function() {
   })
   .done(function(data){
     console.log('client side dataaasssss', data);
+    // sends geo-coded data to '/search' get request to send request to bandsintown for events in that area
     $.get('/search?query=' + data.latitude + ', ' + data.longitude )
     .done(function(queryData){
+      // re-focuses the map using returned search query data
       map.panTo({lat: data.latitude, lng: data.longitude});
       var latLng = {lat: data.latitude, lng: data.longitude}
-
+      // loop through the returned bandsintown event data and place a marker on the map for each event
       queryData.events.forEach(function(el){
         var latLng = {lat: el.venue.latitude, lng: el.venue.longitude}
         placeMarker(latLng, map, el)
@@ -173,6 +177,8 @@ $('#search-form').submit(function() {
   return false;
 });
 
+// on page load, initialize Google map object and add to map-container div
+// currently uses default/hard-coded latitude/longitude vals
 function initMap() {
   map = new google.maps.Map(document.getElementById('map-container'), {
     //General Assembly SM's coordinates
@@ -181,6 +187,8 @@ function initMap() {
   });
 }
 
+// places map markers associated with events returned from bandsintown query
+// called from $('#search-form').submit's .done function
 function placeMarker(latLng, map, eventObj) {
   var marker = new google.maps.Marker({
   position: latLng,
@@ -192,7 +200,7 @@ marker.addListener('mouseover', function(){
 
   // var eventTitle = this.eventInfo.artists[0].name + " at " + this.eventInfo.venue.name;
   var eventId = this.eventInfo.id;
-  // need to pass the eventTitle string through fixedEncodeURIComponent function to get a browser-readable URI (event name without spaces or apostrophes)
+  // pass eventTitle string through fixedEncodeURIComponent function to get a browser-readable URI (remove spaces or apostrophes from event name)
   function fixedEncodeURIComponent (str) {
     return encodeURIComponent(str).replace(/[']/g, function(c) {
       return '%' + c.charCodeAt(0).toString(16);
@@ -210,10 +218,12 @@ marker.addListener('mouseover', function(){
   // var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><button><a href=/events/' + eventId + '>Add to my Shows</a></button>'
   //right about here is where the URL should be concatenated.
 
+  // on mouseover, marker pops up info window with event info and link to bookmark event
   var infowindow = new google.maps.InfoWindow({
     content: contentString
   });
     infowindow.open(map, marker);
+    // info window can be closed by clicking on "x" (default bahavior) or will close after 12 seconds on mouseout
     marker.addListener('mouseout', function(){
       setTimeout(function() {
         infowindow.close(map, marker);

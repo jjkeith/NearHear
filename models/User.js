@@ -13,6 +13,7 @@ var
       zipcode: Number,
       email: String,
       password: String,
+      // embed eventBk into User model
       eventBk: [eventBkSchema]
     }
   })
