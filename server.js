@@ -58,7 +58,7 @@ io.on('connection', function(socket){
       newMessage.body = msg
       newMessage.save(function(err, message){
           if (err) return console.log(err)
-          io.emit('r chat', message)
+          io.emit('r-chat', message)
       })
 	})
 })
@@ -124,12 +124,7 @@ app.use(function(req,res,next){
 app.use('/', userRoutes)
 
 
-  app.get('/messages', function(req, res){
-    Message.find({}).sort('date').limit(3).exec(function(err, mess){
-			if (err) return console.log(err)
-			res.json(mess);
-		})
-  })
+
 
 app.get('/event', function(req, res){
 	var apiUrl = 'http://api.bandsintown.com/events/search?&id=' + req.body.data +  'format=json&app_id=WDISM23'
@@ -176,8 +171,12 @@ app.get('/search', function(req, res) {
 	})
 })
 
-app.get('/chat', function(req, res){
-	res.render('NicksSPA.ejs')
+
+app.get('/messages', function(req, res){
+	Message.find({}).sort({timestamp: 'descending'}).limit(3).exec(function(err, mess){
+		if (err) return console.log(err)
+		res.json(mess.reverse());
+	})
 })
 
 app.post('/geocode', function(req, res){
