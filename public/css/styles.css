@@ -83,8 +83,11 @@ h2 {
 }
 
 .card-primary {
-  background-color: #18A999;
+  background-color: #EDE6E6;
   color: #484349;
+  padding: 20px;
+  width: 40%;
+  opacity: .8;
 }
 
 .btn:hover {
