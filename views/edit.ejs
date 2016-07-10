@@ -1,0 +1,67 @@
+<div id="background"></div>
+
+<div class="padding"></div>
+<div class="padding"></div>
+
+<div class="col-sm-6 col-sm-offset-3">
+  <div class="wrapper">
+    <div class="row">
+      <h1 class="col-sm-11 col-sm-offset-1">Edit Profile</h1>
+    </div>
+
+<form action="/users/<%= user._id %>" method="POST">
+  <input type="hidden" name="_method" value="PATCH" />
+  <div class="form-group row">
+    <label for="inputUsername" class="col-sm-2 col-sm-offset-1 form-control-label">Username</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control validate" id="inputUsername" value="<%= user.local.username %>" name="username">
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label for="inputEmail" class="col-sm-2 col-sm-offset-1 form-control-label">Email</label>
+    <div class="col-sm-8">
+      <input type="email" class="form-control validate" id="inputEmail3" value="<%= user.local.email %>" name="email">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="inputEmail" class="col-sm-2 col-sm-offset-1 form-control-label">Zipcode</label>
+    <div class="col-sm-8">
+      <input type="text" name="zipcode" class="form-control" id="inputZipcode" value="<%= user.local.zipcode %>">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2 col-sm-offset-1">
+      <label for="inputPassword form-control-label">Password</label>
+    </div>
+    <div class="col-sm-8">
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
+    </div>
+</div>
+  <div class="row">
+    <div class="padding"></div>
+    <div class="col-sm-2 col-sm-offset-1">
+      <button id="update-user" class="btn btn-primary" type="submit">Update Profile</button>
+    </div>
+
+</form>
+
+<div class="padding"></div>
+<!-- <div class="col-sm-3 col-sm-offset-3"> -->
+
+  <form action="/users/<%= user._id %>" method="POST">
+    <input type="hidden" name="_method" value="DELETE" />
+
+        <div class="padding"></div>
+        <div class="col-sm-1 col-sm-offset-8 delete-profile">
+          <button type="delete-user" class="btn btn-sm btn-danger" type="submit">Delete Profile</button>
+        </div>
+    </div>
+  </form>
+</div>
+</div>
+</div>
+</div>

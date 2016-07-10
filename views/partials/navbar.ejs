@@ -1,0 +1,40 @@
+  <nav class=" navbar-fixed-top navbar-default navbar" role = "navigation">
+
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        <img alt="Brand" class="logo" src="/../logo_no_words.png" alt="Near Hear" />
+      </a>
+      <a class="navbar-brand" href="/">Near Hear</a>
+      <!-- I want this to be a bigger font for computer displays, but scale down for mobile. -->
+    </div>
+
+      <ul class="nav navbar-nav navbar-right">
+<% if(isLoggedIn) { %>
+  <li><a href="#">Welcome, <%= currentUser.local.username %></a></li>
+  <% } else { %>
+  <% } %>
+<!-- Dropdown shown to users who are logged in -->
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options<span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <% if(isLoggedIn) { %>
+      <li><a href="/profile">View Profile</a></li>
+      <li><a href="/edit">Edit Profile</a></li>
+      <li><a href="/profile#saved-events">Saved Events</a></li>
+      <li role="separator" class="divider"></li>
+      <li><a href="/logout">Log Out</a></li>
+
+<!-- Dropdown shown to users who are not logged in -->
+    <% } else { %>
+            <li><a href="/login">Log In</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+    <% } %>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  <!-- </div></.container-fluid -->
+</nav>
+<div class="padding"></div>

@@ -1,0 +1,123 @@
+/*Page-wide styles*/
+body {
+  font-family: 'Raleway', sans-serif;
+  background-color: #F7F0F0;
+}
+
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/people-party-dancing-music.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100%;
+  opacity: 0.8;
+  filter:alpha(opacity=80);
+  z-index: -1;
+}
+
+.wrapper {
+  background: #F7F0F0;
+  position: sticky;
+  opacity: .7;
+  padding: 10px;
+  /*width: 100%;*/
+  /*height: 100%;*/
+  z-index: -1;
+}
+
+/*Navbar styles*/
+.navbar {
+  height: 80px;
+  background-color: #F7F0F0;
+  margin-bottom: 40px;
+  opacity: .8 ;
+  border-color: transparent;
+}
+
+.navbar-brand {
+  color: #18A999;
+}
+
+.logo {
+  height: 50px;
+}
+
+/*Index style*/
+.jumbotron {
+  background: #F7F0F0;
+  font-family: 'Raleway', sans-serif;
+  color: #484349;
+  opacity: .6;
+}
+
+/*Text Styling*/
+h1 {
+  color: #18A999;
+  font-weight: 800;
+}
+
+h2 {
+  color: #18A999;
+  font-weight: 800;
+}
+
+a {
+  color: #484349;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+
+/*Button Styles*/
+btn {
+  color: #484349;
+  border: #484349;
+}
+
+.btn-primary {
+  border: #18A999;
+  background-color: #18A999;
+  margin-left: 15px;
+}
+
+.btn:hover {
+  opacity: .5 ;
+}
+
+/*Card Styles*/
+.card-primary {
+  background-color: #F7F0F0;
+  color: #484349;
+  padding: 20px;
+  width: 40%;
+  opacity: .9;
+}
+
+label {
+  color: #484349;
+}
+
+#map-container {
+  display: block;
+  width: 100%;
+  height: 300px;
+}
+
+/*Helper Classes*/
+.padding {
+  height: 40px;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}

@@ -1,0 +1,65 @@
+<div id="background"></div>
+
+<div class="padding"></div>
+<div class="padding"></div>
+
+<div class="col-sm-6 col-sm-offset-3">
+  <div class="wrapper">
+  <% if(flash.length > 0){ %></div>
+    <div class="alert alert-danger"><%= flash %></div>
+  <% } %>
+
+<form action="/signup" method="post">
+<div class="row">
+  <div class="col-sm-12">
+    <div class="col-sm-9 col-sm-offset-3">
+      <h2>Sign Up</h2>
+    </div>
+<div class="padding"></div>
+<div class="padding"></div>
+  <div class="form-group row">
+    <div class="col-sm-2 col-sm-offset-1">
+      <label>Username</label>
+    </div>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="username">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2 col-sm-offset-1">
+      <label>Email</label>
+    </div>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="email">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2 col-sm-offset-1">
+      <label>Zipcode</label>
+    </div>
+    <div class="col-sm-8">
+      <input type="number" class="form-control" name="zipcode">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2 col-sm-offset-1">
+      <label>Password</label>
+    </div>
+    <div class="col-sm-8">
+      <input type="password" class="form-control" name="password">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3 col-sm-offset-9">
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+    </div>
+  </div>
+
+</form>
+
+  </div>
+</div>
+</div>

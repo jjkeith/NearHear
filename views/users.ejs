@@ -1,0 +1,264 @@
+<div class="container-fluid">
+
+  <div class=row>
+    <div class="col-sm-6   col-sm-offset-0">
+      <h2 class = "page-header">Who's playing where?<br>
+      <small>Enter your address below to find shows happening today</small></h2>
+
+        <form id ="search-form" method="GET">
+          <div class="form-group row">
+            <div class="col-sm-4 col-sm-offset-0">
+              <label for="inputAddress" class="form-control-label">Enter Address</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="address-input" placeholder="Enter Address" value= '<%= user.local.zipcode %>'>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-0 col-sm-offset-0">
+              <button type="submit" class="btn btn-primary">Search For Events</button>
+            </div>
+          </div>
+
+        </form>
+
+
+        <div class="padding"></div>
+          <p>Click on a marker for more information about an event</p>
+          <div id="map-container" class="col-sm-8 col-sm-offset-0">
+
+          </div>
+    </div>
+
+      <div class="col-sm-5 col-sm-offset-1">
+        <h2 class = "page-header">Chat with other concert goers<br>
+        <small>Share tips, reviews, make plans, meet up with friends</small></h2>
+        <div class="chat_div">
+
+
+  <!-- Put socket chat here -->
+
+
+  <style>
+    #messages { max-width: 500px; height: 300px; overflow-y: scroll}
+    #formnamehere { max-width: 500px;}
+    .chat-window { font: 13px Helvetica, Arial; float: right; margin: 0 auto; max-width: 380px }
+    /*#chat-form { background: #000; padding: 3px; width: 100%; }*/
+    /*#m { border: 0; padding: 10px; width: 90%; margin-right: .5%; }*/
+    #send-button { margin: 2; }
+    #messages { list-style-type: none; margin: 0; padding: 0; }
+    #messages li { padding: 5px 10px; }
+    #messages li:nth-child(odd) { background: #eee; }
+
+  </style>
+
+  <div class="oldchat-window">
+    <ul id="messages"></ul>
+      <form id="chat-form" action="" class="form-inline">
+        <input id="m" autocomplete="off" class="form-control" placeholder="Input Message" /><button id="send-button" class="btn btn-default btn-primary">Send</button>
+      </form>
+
+      </div>
+  </div>
+
+      <script src="/socket.io/socket.io.js"></script>
+        <script>
+          var socket = io();
+
+          function appendMessage(msg){
+            var timestamp = moment(msg.timestamp).format('h:mm:a')
+            $('#messages').append('<li><small>' + timestamp + '</small> ' + msg.body + '</li>')
+          }
+
+          $('#chat-form').submit(function(evt){
+            evt.preventDefault();
+            console.log($('#m').val());
+            socket.emit('send-chat', $('#m').val());
+            $('#m').val('');
+            return false;
+          });
+
+          socket.on('r-chat', function(msg){
+            appendMessage(msg)
+          })
+
+          $.ajax({
+            url: '/messages',
+            method: 'GET'
+          })
+          .done(function(messages){
+            messages.forEach(function(m){
+              appendMessage(m)
+            })
+          })
+        </script>
+      </div>
+
+    <!-- $.ajax({
+      url: '/messages',
+      method: 'GET'
+    })
+    .done(function(messages){
+      messages.forEach(function(m){
+        appendMessage(m)
+      })
+    })
+  </script> -->
+</div>
+<!-- End of chat code -->
+
+
+<div class="padding"></div>
+
+<div class="saved-shows col-sm-10  col-sm-offset-1">
+  <a name="saved-events"></a><h2>Saved Events</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date and Time</th>
+        <th>Tickets</th>
+      </tr>
+    </thead>
+    <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+// to be used in href request to bookmark event to user
+var userId = <%- JSON.stringify(user._id) %>;
+// to access user bookmarked events array so that they can be rendered on the user view
+var userEvents = <%- JSON.stringify(user.local.eventBk) %>;
+
+//loop through bookmarked events and add each to table on page load
+userEvents.forEach(function(evt) {
+  var formatDateTime = moment(evt.datetime).format("dddd, MMM DD YYYY, h:mm a");
+  var tableBody = $('table tbody');
+  var tableRow = $("<tr id='" + evt._id + "'></tr>");
+  tableRow.append("<td>" + evt.title + "</td>" + "<td>" + formatDateTime + "</td>" + "<td><a href='" + evt.ticket_url + "'</a>Click here</td>");
+  tableBody.append(tableRow);
+});
+
+
+$('#search-form').submit(function() {
+
+  var searchAddress = $('#address-input').val()
+  var eventDisplay = $('#events-display')
+
+  // passes address input value to NodeGeocoder in '/geocode' post request
+  // the returned data is the geocoded address object
+  $.ajax({
+    url: '/geocode',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({data: searchAddress})
+  })
+  .done(function(data){
+    console.log('client side dataaasssss', data);
+    // sends geo-coded data to '/search' get request to send request to bandsintown for events in that area
+    $.get('/search?query=' + data.latitude + ', ' + data.longitude )
+    .done(function(queryData){
+      // re-focuses the map using returned search query data
+      map.panTo({lat: data.latitude, lng: data.longitude});
+      var latLng = {lat: data.latitude, lng: data.longitude}
+      // loop through the returned bandsintown event data and place a marker on the map for each event
+      queryData.events.forEach(function(el){
+        var latLng = {lat: el.venue.latitude, lng: el.venue.longitude}
+        placeMarker(latLng, map, el)
+      });
+    })
+  })
+
+  $('#address-input').val('');
+
+  console.log('message sending');
+  return false;
+});
+
+var userAddress = <%- JSON.stringify(user.local.zipcode) %>;
+
+$.ajax({
+  url: '/geocode',
+  method: 'POST',
+  contentType: 'application/json',
+  data: JSON.stringify({data: userAddress})
+})
+.done(function(data){
+    var latLng = {lat: data.latitude, lng: data.longitude}
+    map.setCenter(latLng);
+})
+
+
+// on page load, initialize Google map object and add to map-container div
+// currently uses default/hard-coded latitude/longitude vals
+function initMap() {
+
+  map = new google.maps.Map(document.getElementById('map-container'), {
+    //General Assembly SM's coordinates
+    // center:
+    zoom: 11
+  });
+}
+
+// places map markers associated with events returned from bandsintown query
+// called from $('#search-form').submit's .done function
+function placeMarker(latLng, map, eventObj) {
+  var marker = new google.maps.Marker({
+  position: latLng,
+  map: map,
+  eventInfo: eventObj
+});
+
+marker.addListener('mouseover', function(){
+  // var eventTitle = this.eventInfo.artists[0].name + " at " + this.eventInfo.venue.name;
+  var eventId = this.eventInfo.id;
+  console.log(this.eventInfo)
+  // pass eventTitle string through fixedEncodeURIComponent function to get a browser-readable URI (remove spaces or apostrophes from event name)
+  function fixedEncodeURIComponent (str) {
+    return encodeURIComponent(str).replace(/[']/g, function(c) {
+      return '%' + c.charCodeAt(0).toString(16);
+    });
+  }
+  var eventTitle = fixedEncodeURIComponent(this.eventInfo.artists[0].name + " at " + this.eventInfo.venue.name);
+  console.log('eventTitle:', eventTitle)
+  var dateTime = this.eventInfo.datetime;
+  var ticketURL = this.eventInfo.ticket_url;
+  var bookmarkLink = '/users/' + userId  + '/add-event/?title='  + eventTitle +  '&datetime=' + dateTime + '&ticket_url=' + ticketURL
+  console.log(bookmarkLink);
+  //userId variable defined at top of script
+  var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><a href=' + bookmarkLink + '>Bookmark Event</a>';
+  // console.log(contentString);
+  // var contentString = '<h4>' + this.eventInfo.artists[0].name + '</h4><p>' + this.eventInfo.venue.name + '</p><button><a href=/events/' + eventId + '>Add to my Shows</a></button>'
+  //right about here is where the URL should be concatenated.
+
+  // on mouseover, marker pops up info window with event info and link to bookmark event
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+    infowindow.open(map, marker);
+    // info window can be closed by clicking on "x" (default bahavior) or will close after 12 seconds on mouseout
+    marker.addListener('mouseout', function(){
+      setTimeout(function() {
+        infowindow.close(map, marker);
+      }, 1200)
+    })
+    marker.addListener('click', function(){
+      sessionStorage.setItem( 'eventID',this.eventInfo.id )
+      sessionStorage.setItem( 'event', JSON.stringify(this.eventInfo) )
+      window.location = '/event'
+      console.log(this.eventInfo)
+    })
+  })
+}
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg7qsdMIt6_u3lp0AfjJoz41S2C8fyCRg&callback=initMap"
+ async defer>
+
+ </script>
