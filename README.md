@@ -34,9 +34,9 @@ Near Hear connects users with bands playing by location using a convenient map i
 * [Bandsintown](https://www.bandsintown.com/api/overview)
 
 ### Other
-Color palette picker: [cooler](https://coolors.co/app/484349-f7f0f0-8af3ff-18a999-109648)
-Deployment: [Heroku](https://heroku.com/)
-SCRUM: [Trello](https://trello.com/)
+* Color palette picker: [cooler](https://coolors.co/app/484349-f7f0f0-8af3ff-18a999-109648)
+* Deployment: [Heroku](https://heroku.com/)
+* SCRUM: [Trello](https://trello.com/)
 
 ### User Stories
 * A user will be able to sign up for an account. 
