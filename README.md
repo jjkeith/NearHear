@@ -5,11 +5,12 @@
 [https://nearhear.herokuapp.com](click here)
 
 ### Contributors
-JJ Keith | Contact: jj@jjkeith.net [GitHub](https://github.com/jjkeith)
 
-Nicholas Nemetz | Contact: n.nemetz1230@gmail.com [GitHub](https://github.com/nem1230)
-
-Susan Rotondo | Contact: susanrotondo@gmail.com [GitHub](https://github.com/susanrotondo)
+| Name | Email | Github   |
+|---|---|---|
+| JJ Keith | jj@jjkeith.net | [GitHub](https://github.com/jjkeith) |
+| Nicholas Nemetz | n.nemetz1230@gmail.com | [GitHub](https://github.com/nem1230) |
+| Susan Rotondo | susanrotondo@gmail.com | [GitHub](https://github.com/susanrotondo) |
 
 ### Description
 
@@ -34,7 +35,8 @@ Near Hear connects users with bands playing by location using a convenient map i
 
 ### Other
 Color palette picker: [cooler](https://coolors.co/app/484349-f7f0f0-8af3ff-18a999-109648)
-[this list should include heroku, trello, etc]
+Deployment: [Heroku](https://heroku.com/)
+SCRUM: [Trello](https://trello.com/)
 
 ### User Stories
 * A user will be able to sign up for an account. 
@@ -52,9 +54,9 @@ Color palette picker: [cooler](https://coolors.co/app/484349-f7f0f0-8af3ff-18a99
 ![](public/wireframes/p3-search-results-v2.png)
 
 ### Future Implementations
-
-* Add another API to broaded the scope of searchable events.
+* Add another API to broaden the scope of searchable events.
 * Edit and delete items on the saved events list.
 * Add artist pictures on event detail pages.
+* Improve root functionality.
 
 
