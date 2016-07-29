@@ -2,21 +2,29 @@
 
 ![](public/favicon.ico)
 
+
 [click here](https://nearhear.herokuapp.com)
 
 ### Screenshots
 ![](landing-page.png)
 ![](map-page.png)
 
-### Description
+### Contributors
 
+| Name | Email | Github   |
+|---|---|---|
+| JJ Keith | jj@jjkeith.net | [GitHub](https://github.com/jjkeith) |
+| Nicholas Nemetz | n.nemetz1230@gmail.com | [GitHub](https://github.com/nem1230) |
+| Susan Rotondo | susanrotondo@gmail.com | [GitHub](https://github.com/susanrotondo) |
+
+
+### Description
 Near Hear connects users with bands playing by location using a convenient map interface.
 
 * Each event has a live comment stream so users can find out what’s going on before they leave the house.
 * When creating an account, users can set their default zip code and search events by any address.
 
 ### Technologies Used
-
 * NodeJS + Express
 * MongoDB + Mongoose
 * JavaScript + jQuery
@@ -30,7 +38,9 @@ Near Hear connects users with bands playing by location using a convenient map i
 * [Bandsintown](https://www.bandsintown.com/api/overview)
 
 ### Other
-Cooler, Trello, Heroku
+* Color palette picker: [cooler](https://coolors.co/app/484349-f7f0f0-8af3ff-18a999-109648)
+* Deployment: [Heroku](https://heroku.com/)
+* SCRUM: [Trello](https://trello.com/)
 
 ### User Stories
 * A user will be able to sign up for an account.
@@ -43,12 +53,8 @@ Cooler, Trello, Heroku
 * The event details view will display in real-time event comments submitted by users. A user can add a comment(s) to the event page.
 
 
-### Contributors
-Nicholas Nemetz ([GitHub](https://github.com/nem1230)) and Susan Rotondo ( [GitHub](https://github.com/susanrotondo)) also contributed, particular to the incorporation of the API's. Original GitHub [here](https://github.com/jjkeith/Project3)
-
-
 ### Future Implementations
-
 * Add another API to broaden the scope of searchable events.
 * Edit and delete items on the saved events list.
 * Add artist pictures on event detail pages.
+* Improve root functionality.
